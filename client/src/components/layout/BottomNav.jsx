@@ -1,5 +1,5 @@
 /**
- * @fileoverview Mobile bottom navigation bar
+ * @fileoverview Mobile bottom navigation – earthy active states
  */
 import React from 'react'
 import { NavLink } from 'react-router-dom'
@@ -21,10 +21,11 @@ export default function BottomNav() {
     <nav
       className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t"
       style={{
-        background: 'var(--color-card)',
-        borderColor: 'var(--color-border)',
-        boxShadow: '0 -4px 20px rgba(0,0,0,0.08)',
+        background:   'var(--color-card)',
+        borderColor:  'var(--color-border)',
+        boxShadow:    '0 -2px 16px rgba(45,80,22,0.08)',
       }}
+      aria-label="Mobile navigation"
     >
       <div className="flex items-center justify-around h-16 px-2">
         {MOBILE_NAV.map(({ to, icon: Icon, label }) => (
@@ -33,19 +34,31 @@ export default function BottomNav() {
             to={to}
             className="flex flex-col items-center justify-center gap-0.5 flex-1 h-full min-w-0"
             style={({ isActive }) => ({
-              color: isActive ? 'var(--color-primary)' : 'var(--color-text-muted)',
+              color: isActive ? 'var(--green-mid)' : 'var(--color-text-muted)',
             })}
             aria-label={label}
           >
             {({ isActive }) => (
               <>
                 <div
-                  className={`p-1.5 rounded-xl transition-all duration-200 ${isActive ? 'scale-110' : ''}`}
-                  style={isActive ? { background: 'rgba(45,106,79,0.1)' } : {}}
+                  className="p-1.5 rounded-xl transition-all duration-300"
+                  style={
+                    isActive
+                      ? { background: 'var(--leaf-shadow)', transform: 'scale(1.08)' }
+                      : {}
+                  }
                 >
                   <Icon className="w-6 h-6" />
                 </div>
-                <span className="text-[10px] font-medium leading-none">{label}</span>
+                <span
+                  className="text-[10px] font-medium leading-none"
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    color: isActive ? 'var(--green-mid)' : 'var(--color-text-muted)',
+                  }}
+                >
+                  {label}
+                </span>
               </>
             )}
           </NavLink>

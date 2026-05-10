@@ -51,16 +51,24 @@ export default function App() {
         toastOptions={{
           duration: 4000,
           style: {
-            borderRadius: '12px',
-            fontFamily: 'Inter, sans-serif',
+            borderRadius: '14px',
+            fontFamily: "'DM Sans', 'Nunito', sans-serif",
             fontSize: '14px',
+            background: 'var(--color-card)',
+            color: 'var(--color-text)',
+            border: '1px solid var(--color-border)',
+            boxShadow: '0 4px 16px rgba(45,80,22,0.10)',
           },
           success: {
-            style: { background: '#2D6A4F', color: '#fff' },
-            iconTheme: { primary: '#95D5B2', secondary: '#2D6A4F' },
+            style: {
+              background: '#4A7C2F',
+              color: '#FDFAF4',
+              border: '1px solid #3A6320',
+            },
+            iconTheme: { primary: '#8DB87A', secondary: '#4A7C2F' },
           },
           error: {
-            style: { background: '#E63946', color: '#fff' },
+            style: { background: '#B5432A', color: '#FDFAF4', border: '1px solid #8B2E1A' },
           },
         }}
       />
