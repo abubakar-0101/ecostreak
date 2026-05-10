@@ -22,7 +22,8 @@ const Leaderboard= lazy(() => import('./pages/Leaderboard'))
 const Impact     = lazy(() => import('./pages/Impact'))
 const Report     = lazy(() => import('./pages/Report'))
 const Profile    = lazy(() => import('./pages/Profile'))
-const NotFound   = lazy(() => import('./pages/NotFound'))
+const NotFound     = lazy(() => import('./pages/NotFound'))
+const Certificate  = lazy(() => import('./pages/Certificate'))
 
 // ─── PROTECTED ROUTE WRAPPER ────────────────────────────────
 const ProtectedRoute = ({ children }) => {
@@ -91,6 +92,7 @@ export default function App() {
             <Route path="impact"      element={<Impact />} />
             <Route path="report"      element={<Report />} />
             <Route path="profile"     element={<Profile />} />
+            <Route path="certificate" element={<Certificate />} />
           </Route>
 
           {/* ── 404 ── */}

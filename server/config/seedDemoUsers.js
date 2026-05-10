@@ -19,7 +19,6 @@ const DEMO_USERS = [
   {
     username:    'GreenGoddess',
     email:       'greengoddess@ecostreak.app',
-    password:    'demo1234',
     avatar:      '🌳',
     bio:         'Passionate environmentalist. Trees are my best friends 🌿',
     location:    'Portland, OR',
@@ -30,7 +29,6 @@ const DEMO_USERS = [
   {
     username:    'EcoNinja',
     email:       'econinja@ecostreak.app',
-    password:    'demo1234',
     avatar:      '🐢',
     bio:         'Silent eco warrior. One action at a time 🥷',
     location:    'Austin, TX',
@@ -41,7 +39,6 @@ const DEMO_USERS = [
   {
     username:    'PlanetPete',
     email:       'planetpete@ecostreak.app',
-    password:    'demo1234',
     avatar:      '🌍',
     bio:         'Geography teacher who walks the eco talk 🌎',
     location:    'Denver, CO',
@@ -52,7 +49,6 @@ const DEMO_USERS = [
   {
     username:    'SolarSarah',
     email:       'solarsarah@ecostreak.app',
-    password:    'demo1234',
     avatar:      '☀️',
     bio:         'Solar panel installer by day, eco warrior by night ⚡',
     location:    'Phoenix, AZ',
@@ -63,7 +59,6 @@ const DEMO_USERS = [
   {
     username:    'WaveRider',
     email:       'waverider@ecostreak.app',
-    password:    'demo1234',
     avatar:      '🌊',
     bio:         'Surfer who keeps oceans clean, one wave at a time 🏄',
     location:    'San Diego, CA',
@@ -74,7 +69,6 @@ const DEMO_USERS = [
   {
     username:    'BeeKeeper99',
     email:       'beekeeper99@ecostreak.app',
-    password:    'demo1234',
     avatar:      '🐝',
     bio:         'Beekeeper, gardener, and proud zero-waster 🍯',
     location:    'Asheville, NC',
@@ -85,7 +79,6 @@ const DEMO_USERS = [
   {
     username:    'UrbanForester',
     email:       'urbanforester@ecostreak.app',
-    password:    'demo1234',
     avatar:      '🦋',
     bio:         'Turning concrete jungles into green havens 🌱',
     location:    'Chicago, IL',
@@ -197,11 +190,17 @@ const seed = async () => {
     const challengeStartDate = new Date()
     challengeStartDate.setDate(challengeStartDate.getDate() - profile.startDaysAgo)
 
+    // Require password from env
+    if (!process.env.DEMO_USER_PASSWORD) {
+      console.error('❌ DEMO_USER_PASSWORD environment variable is required to seed demo users.')
+      process.exit(1)
+    }
+
     // Create user
     const user = await User.create({
       username:        profile.username,
       email:           profile.email,
-      passwordHash:    profile.password,   // plain text — hook hashes it
+      passwordHash:    process.env.DEMO_USER_PASSWORD,   // plain text — hook hashes it
       avatar:          profile.avatar,
       bio:             profile.bio,
       location:        profile.location,

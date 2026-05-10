@@ -38,19 +38,115 @@
   --radius-modal: 20px;
   --transition:   0.3s ease;
 }
-
+/* ═══ NIGHTTIME FOREST — dark mode tokens + overrides ═══ */
 .dark {
-  /* Warm dark earth — mossy forest at night */
-  --color-bg:         #151E0F;
-  --color-text:       #D4EABF;
-  --color-text-muted: #7EA86A;
-  --color-card:       #1E2E14;
-  --color-border:     #2D4020;
-  --color-sidebar:    #192613;
-  --leaf-shadow:      #1A2D12;
-  --shadow-sm:  0 1px 4px  rgba(0,0,0,0.40);
-  --shadow-md:  0 4px 16px rgba(0,0,0,0.50);
-  --shadow-lg:  0 8px 32px rgba(0,0,0,0.60);
+  /* ── 4 distinct depth layers ── */
+  --color-bg:         #090D07;   /* near-black page base */
+  --color-sidebar:    #0F1A0A;   /* step 1 — sidebar */
+  --color-card:       #182512;   /* step 2 — main cards */
+  --leaf-shadow:      #0C1509;   /* step 3 — recessed/stat surfaces */
+  --color-border:     #4A6830;   /* outer card borders — clearly visible */
+
+  /* ── Text ── */
+  --color-text:       #E2EFD0;   /* bright, high contrast */
+  --color-text-muted: #87B36A;   /* readable sage */
+
+  /* ── Brand — vivid so CTA buttons pop ── */
+  --color-primary:    #4D9C2C;
+  --color-secondary:  #8DB87A;
+  --color-accent:     #5FAE38;
+  --green-mid:        #4D9C2C;   /* ensures btn-primary uses bright green */
+  --green-light:      #8DB87A;
+  --green-deep:       #C8E8A8;   /* headings: bright cream-green on dark bg */
+  --bark:             #A8C990;   /* italic/tip text: readable sage on dark */
+
+  /* ── Shadows — true black depth ── */
+  --shadow-sm:   0 1px 4px  rgba(0,0,0,0.55);
+  --shadow-md:   0 3px 16px rgba(0,0,0,0.65);
+  --shadow-lg:   0 6px 32px rgba(0,0,0,0.75);
+  --shadow-warm: 0 2px 16px rgba(0,0,0,0.60);
+}
+
+/* ── Outer eco-card: elevated above page bg ── */
+.dark .eco-card {
+  background: #182512;
+  border-color: #4A6830;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.55);
+}
+.dark .eco-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.70);
+}
+
+/* ── Stat / nested cards: DARKER than outer card (carved-in) ── */
+.dark .eco-card .eco-card,
+.dark [class*="stat-card"],
+.dark [class*="impact-card"],
+.dark [class*="stat-item"],
+.dark [class*="impact-item"] {
+  background: #0C1509;
+  border-color: #253D18;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.55), inset 0 1px 3px rgba(0,0,0,0.40);
+}
+
+/* ── Stat value numbers: bright so they're readable ── */
+.dark [class*="stat-card"] h2,
+.dark [class*="impact-card"] h2,
+.dark [class*="stat-item"] h2,
+.dark [class*="impact-item"] h2,
+.dark [class*="stat-card"] .value,
+.dark [class*="impact-card"] .value {
+  color: #C8E8A8;
+}
+
+/* ── btn-primary: vivid, clearly visible on dark cards ── */
+.dark .btn-primary {
+  background: #4D9C2C;
+  box-shadow: 0 2px 12px rgba(77,156,44,0.40);
+  color: #fff;
+}
+.dark .btn-primary:hover {
+  background: #5FAE38;
+  box-shadow: 0 4px 20px rgba(77,156,44,0.50);
+}
+.dark .btn-primary:disabled {
+  background: #1A2D12;
+  box-shadow: none;
+  color: #4A6830;
+}
+
+/* ── Active nav item: lit surface, distinct from sidebar ── */
+.dark nav .active,
+.dark [aria-current="page"] {
+  background: #1F3018;
+  border: 1px solid #4A6830;
+  color: #C8E8A8;
+}
+
+/* ── Field notes / tip section: recessed with green accent ── */
+.dark .field-notes {
+  background: #0C1509;
+  border-color: #253D18;
+  border-left: 2px solid #4D9C2C;
+  background-image: repeating-linear-gradient(
+    transparent, transparent 27px, #1A2E12 28px
+  );
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.45);
+}
+
+/* ── Streak badge ── */
+.dark .streak-badge {
+  background: #0C1509;
+  border-color: #4D9C2C;
+  color: #C8E8A8;
+}
+
+/* ── Progress bar ── */
+.dark .progress-bar-track {
+  background: #0C1509;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.50);
+}
+.dark .progress-bar-fill {
+  background: linear-gradient(90deg, #3A7A20, #4D9C2C);
 }
 
 /* ═══════════════════════════════════════════════════

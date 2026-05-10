@@ -93,27 +93,31 @@ export default function Tasks() {
             transition={{ duration: 0.6, delay: 0.08, ease: 'easeOut' }}
           >
             {/* Category + meta */}
-            <div className="flex flex-wrap gap-2 mb-5">
+            <div className="flex flex-wrap items-center gap-3 mb-5">
               {/* Bark-brown day badge */}
               <div
-                className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
+                className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0 leading-none"
                 style={{ background: 'var(--bark)', fontFamily: "'DM Sans', sans-serif" }}
                 aria-label={`Day ${task.dayNumber}`}
               >
                 {task.dayNumber}
               </div>
               <span
-                className="px-3 py-1 rounded-full text-xs font-bold"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold leading-none"
                 style={{ background: cat?.bg, color: cat?.color }}
               >
-                {cat?.icon} {task.category}
+                <span aria-hidden="true" className="text-[14px] leading-none">{cat?.icon}</span>
+                <span>{task.category}</span>
               </span>
-              <span className={`pill-${task.difficulty.toLowerCase()}`}>{task.difficulty}</span>
+              <span className={`pill-${task.difficulty.toLowerCase()} inline-flex items-center px-3 py-1.5 leading-none`}>
+                {task.difficulty}
+              </span>
               <span
-                className="text-xs px-3 py-1 rounded-full font-medium"
+                className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium leading-none"
                 style={{ background: 'var(--leaf-shadow)', color: 'var(--color-text-muted)' }}
               >
-                ⏱ {task.estimatedMinutes} minutes
+                <span aria-hidden="true" className="text-[14px] leading-none">⏱️</span>
+                <span>{task.estimatedMinutes} minutes</span>
               </span>
             </div>
 

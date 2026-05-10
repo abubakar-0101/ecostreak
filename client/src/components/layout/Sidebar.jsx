@@ -12,7 +12,7 @@ import {
   HiOutlineHome, HiOutlineClipboardList, HiOutlineCalendar,
   HiOutlineStar, HiOutlineTrendingUp, HiOutlineChartBar,
   HiOutlineDocumentReport, HiOutlineUser, HiOutlineLogout,
-  HiOutlineMoon, HiOutlineSun,
+  HiOutlineMoon, HiOutlineSun, HiOutlineAcademicCap,
 } from 'react-icons/hi'
 
 const NAV_ITEMS = [
@@ -23,6 +23,7 @@ const NAV_ITEMS = [
   { to: '/leaderboard', icon: HiOutlineTrendingUp,      label: 'Leaderboard' },
   { to: '/impact',      icon: HiOutlineChartBar,        label: 'Impact' },
   { to: '/report',      icon: HiOutlineDocumentReport,  label: 'Report' },
+  { to: '/certificate', icon: HiOutlineAcademicCap,     label: 'Certificate', requiresCompletion: true },
   { to: '/profile',     icon: HiOutlineUser,            label: 'Profile' },
 ]
 
@@ -108,50 +109,69 @@ export default function Sidebar() {
 
       {/* ── Navigation ── */}
       <nav className="flex-1 p-3 overflow-y-auto space-y-0.5" aria-label="Main navigation">
-        {NAV_ITEMS.map(({ to, icon: Icon, label }) => (
-          <NavLink
-            key={to}
-            to={to}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
-                isActive
-                  ? 'text-white'
-                  : 'hover:bg-[var(--leaf-shadow)]'
-              }`
-            }
-            style={({ isActive }) =>
-              isActive
-                ? {
-                    background: 'var(--green-mid)',
-                    color: '#FDFAF4',
-                    boxShadow: '0 2px 10px rgba(74,124,47,0.20)',
-                  }
-                : { color: 'var(--color-text-muted)' }
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <Icon
-                  className="w-5 h-5 flex-shrink-0"
-                  style={{ opacity: isActive ? 1 : 0.75 }}
-                />
+        {NAV_ITEMS.map(({ to, icon: Icon, label, requiresCompletion }) => {
+          const isDemo = user?.email?.endsWith('@ecostreak.app')
+          const isLocked = requiresCompletion && !isDemo && (user?.completedDays ?? 0) < 30
+
+          if (isLocked) {
+            return (
+              <div
+                key={to}
+                title="Complete all 30 days to unlock"
+                className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium"
+                style={{ color: 'var(--color-border)', cursor: 'not-allowed', opacity: 0.6 }}
+              >
+                <Icon className="w-5 h-5 flex-shrink-0" style={{ opacity: 0.5 }} />
                 <span style={{ fontFamily: "'DM Sans', sans-serif" }}>{label}</span>
-                {/* Active hand-drawn-style underline indicator */}
-                {isActive && (
-                  <motion.span
-                    className="ml-auto"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.25 }}
-                    aria-hidden="true"
-                  >
-                    🌿
-                  </motion.span>
-                )}
-              </>
-            )}
-          </NavLink>
-        ))}
+                <span className="ml-auto text-xs" aria-label="Locked">🔒</span>
+              </div>
+            )
+          }
+
+          return (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
+                  isActive
+                    ? 'text-white'
+                    : 'hover:bg-[var(--leaf-shadow)]'
+                }`
+              }
+              style={({ isActive }) =>
+                isActive
+                  ? {
+                      background: 'var(--green-mid)',
+                      color: '#FDFAF4',
+                      boxShadow: '0 2px 10px rgba(74,124,47,0.20)',
+                    }
+                  : { color: 'var(--color-text-muted)' }
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <Icon
+                    className="w-5 h-5 flex-shrink-0"
+                    style={{ opacity: isActive ? 1 : 0.75 }}
+                  />
+                  <span style={{ fontFamily: "'DM Sans', sans-serif" }}>{label}</span>
+                  {isActive && (
+                    <motion.span
+                      className="ml-auto"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 0.25 }}
+                      aria-hidden="true"
+                    >
+                      🌿
+                    </motion.span>
+                  )}
+                </>
+              )}
+            </NavLink>
+          )
+        })}
       </nav>
 
       {/* ── Bottom actions ── */}

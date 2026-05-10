@@ -67,6 +67,8 @@ export default function Dashboard() {
       setAlreadyDone(taskRes.data.completedToday)
       setStreak(streakRes.data)
       setStats(statsRes.data)
+      // Sync completedDays into auth store so sidebar can read it
+      updateUser({ completedDays: statsRes.data.completedDays })
     } catch {
       toast.error('Failed to load dashboard data')
     } finally {

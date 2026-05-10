@@ -2,7 +2,8 @@
  * @fileoverview Report page – 30-day summary, earthy certificate, nature-themed charts
  * Completion screen: falling leaves animation, heartfelt Lora message, earth impact stats
  */
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Bar, Pie, Line } from 'react-chartjs-2'
@@ -74,7 +75,6 @@ export default function Report() {
   const [report,  setReport]  = useState(null)
   const [loading, setLoading] = useState(true)
   const [showLeaves, setShowLeaves] = useState(false)
-  const certRef = useRef(null)
 
   useEffect(() => {
     impactAPI.getReport()
@@ -90,22 +90,6 @@ export default function Report() {
       .finally(() => setLoading(false))
   }, [])
 
-  const handleDownloadCert = () => {
-    if (!certRef.current) return
-    const html = certRef.current.outerHTML
-    const blob = new Blob([`<!DOCTYPE html><html><head><meta charset="utf-8"/><style>
-      @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;600&display=swap');
-      body{font-family:'DM Sans',sans-serif;background:#F5F0E8;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
-      .cert{background:#FDFAF4;border:3px solid #4A7C2F;border-radius:20px;padding:48px;max-width:640px;text-align:center}
-      h2{font-family:'Lora',serif;color:#2D5016}
-      p{color:#6B4C2A}
-    </style></head><body>${html}</body></html>`], { type: 'text/html' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url; a.download = 'EcoStreak-Certificate.html'; a.click()
-    URL.revokeObjectURL(url)
-    toast.success('Certificate downloaded! 🌿')
-  }
 
   if (loading) {
     return <div className="space-y-6">{[1, 2, 3].map(i => <SkeletonCard key={i} />)}</div>
@@ -235,84 +219,72 @@ export default function Report() {
         </motion.div>
       )}
 
-      {/* Certificate – completion celebration screen */}
+      {/* ── Certificate CTA ── */}
       <motion.div
         initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.45, ease: 'easeOut' }}
       >
         <Card>
-          <h3
-            className="font-bold mb-6 text-center text-xl"
-            style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
-          >
-            🏅 Certificate of Completion
-          </h3>
+          {(() => {
+            const isDemo = user?.email?.endsWith('@ecostreak.app')
+            const done = report?.completedDaysCount ?? 0
+            const pct  = Math.min(100, Math.round((done / 30) * 100))
+            const isUnlocked = isDemo || done >= 30
 
-          {/* Certificate parchment */}
-          <div
-            ref={certRef}
-            className="cert border-2 rounded-2xl p-10 text-center mx-auto max-w-lg"
-            style={{
-              borderColor:  'var(--green-mid)',
-              background:   '#FDFAF4',
-              borderStyle:  'solid',
-              boxShadow:    'inset 0 0 40px rgba(74,124,47,0.04)',
-            }}
-          >
-            <div className="text-5xl mb-5 animate-float" aria-hidden="true">🌿</div>
-            <h2
-              className="text-2xl font-bold mb-2"
-              style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
-            >
-              EcoStreak
-            </h2>
-            <p className="text-sm mb-4" style={{ color: 'var(--color-text-muted)', fontFamily: "'DM Sans', sans-serif" }}>
-              This certifies that
-            </p>
-            <p
-              className="text-3xl font-bold mb-4"
-              style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
-            >
-              {user?.username}
-            </p>
-            <p
-              className="text-base mb-5 leading-relaxed"
-              style={{ color: 'var(--bark)', fontFamily: "'Lora', serif", fontStyle: 'italic' }}
-            >
-              has successfully completed the<br />
-              <strong style={{ fontStyle: 'normal' }}>30-Day Sustainability Challenge</strong>
-            </p>
-            {/* Animated earth impact stats */}
-            <div
-              className="flex justify-center gap-4 flex-wrap my-5 text-sm"
-              style={{ color: 'var(--green-mid)' }}
-            >
-              <span>💧 {report?.totalWaterSaved ?? 0}L water</span>
-              <span>🌿 {((report?.totalCO2Reduced ?? 0) / 1000).toFixed(2)}kg CO₂</span>
-              <span>♻️ {report?.totalPlasticAvoided ?? 0}g plastic</span>
-            </div>
-            <p
-              className="text-xs"
-              style={{ color: 'var(--color-text-muted)', fontFamily: "'DM Sans', sans-serif" }}
-            >
-              {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-            </p>
-          </div>
+            return (
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div className="flex items-center gap-4">
+                  <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+                    style={{ background: 'var(--leaf-shadow)', border: '1.5px solid var(--green-light)' }}
+                  >
+                    {isUnlocked ? '🏅' : '🔒'}
+                  </div>
+                  <div>
+                    <h3
+                      className="font-bold text-lg"
+                      style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
+                    >
+                      Certificate of Completion
+                    </h3>
+                    {isUnlocked ? (
+                      <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
+                        View and print your official EcoStreak achievement certificate.
+                      </p>
+                    ) : (
+                      <div className="mt-1.5 space-y-1.5">
+                        <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                          Complete all 30 days to unlock — <strong style={{ color: 'var(--green-mid)' }}>{done}/30 done</strong>
+                        </p>
+                        <div className="progress-bar-track" style={{ height: '6px', maxWidth: '220px' }}>
+                          <div className="progress-bar-fill" style={{ width: `${pct}%` }} />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
 
-          <div className="flex gap-3 mt-6 justify-center flex-wrap">
-            <Button onClick={handleDownloadCert}>⬇ Download Certificate</Button>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                navigator.share?.({
-                  title: 'I completed EcoStreak!',
-                  text:  'I just finished the 30-Day Sustainability Challenge! 🌍',
-                }).catch(() => toast('Share not supported on this browser'))
-              }}
-            >
-              📤 Share
-            </Button>
-          </div>
+                {isUnlocked ? (
+                  <Link to="/certificate" id="btn-view-certificate" className="btn-primary text-sm px-5 py-3">
+                    View Certificate →
+                  </Link>
+                ) : (
+                  <span
+                    className="text-sm px-5 py-3 rounded-2xl font-semibold"
+                    style={{
+                      background: 'var(--leaf-shadow)',
+                      color: 'var(--color-text-muted)',
+                      border: '1px solid var(--color-border)',
+                      cursor: 'not-allowed',
+                    }}
+                    title={`Complete ${30 - done} more day${30 - done !== 1 ? 's' : ''} to unlock`}
+                  >
+                    🔒 Locked
+                  </span>
+                )}
+              </div>
+            )
+          })()}
         </Card>
       </motion.div>
     </div>
