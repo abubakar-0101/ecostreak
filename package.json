@@ -9,6 +9,7 @@
     "dev:client": "cd client && npm run dev",
     "install:all": "npm install && cd client && npm install && cd ../server && npm install",
     "seed": "cd server && npm run seed",
+    "seed:prod": "node server/config/seed.js && node server/config/seedDemoUsers.js",
     "build": "cd client && npm run build"
   },
   "devDependencies": {
