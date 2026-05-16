@@ -82,7 +82,7 @@ const sendOTPEmail = async (to, otp) => {
       'accept': 'application/json',
       'api-key': apiKey,
       'content-type': 'application/json',
-      'content-length': data.length,
+      'content-length': Buffer.byteLength(data),
     },
   }
 
