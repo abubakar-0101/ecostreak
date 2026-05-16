@@ -1,33 +1,19 @@
 /**
- * @fileoverview Email helpers using Brevo (formerly Sendinblue) SMTP Relay
+ * @fileoverview Email helpers using Brevo (formerly Sendinblue) HTTP API v3
+ * This bypasses SMTP port blocking on Railway.
  */
-const nodemailer = require('nodemailer')
+const https = require('https')
 
 /**
- * Create Brevo transporter
- * Brevo allows sending to any recipient as long as the sender is verified.
- */
-const transporter = nodemailer.createTransport({
-  host: 'smtp-relay.brevo.com',
-  port: 465,
-  secure: true, // Use SSL for port 465
-  auth: {
-    user: process.env.MAIL_USER || 'ecostreaksupport@gmail.com',
-    pass: process.env.BREVO_SMTP_KEY,
-  },
-  // Essential for reliability on Railway
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 15000,
-})
-
-/**
- * Send OTP verification email
+ * Send OTP verification email via Brevo API
  * @param {string} to - recipient email
  * @param {string} otp - 6-digit OTP code
  */
 const sendOTPEmail = async (to, otp) => {
-  const html = `
+  const senderEmail = process.env.MAIL_USER || 'ecostreaksupport@gmail.com'
+  const apiKey = process.env.BREVO_API_KEY || process.env.BREVO_SMTP_KEY
+
+  const htmlContent = `
     <!DOCTYPE html>
     <html>
     <head>
@@ -80,23 +66,51 @@ const sendOTPEmail = async (to, otp) => {
     </html>
   `
 
-  console.log(`[Mailer] Attempting to send OTP to: ${to} via Brevo`)
+  const data = JSON.stringify({
+    sender: { name: 'EcoStreak', email: senderEmail },
+    to: [{ email: to }],
+    subject: '🌿 Your EcoStreak verification code',
+    htmlContent: htmlContent,
+  })
 
-  try {
-    const info = await transporter.sendMail({
-      from: process.env.MAIL_FROM || `EcoStreak <${process.env.MAIL_USER}>`,
-      to,
-      subject: '🌿 Your EcoStreak verification code',
-      html,
-      text: `Your EcoStreak verification code is: ${otp}`,
-    })
-    console.log(`[Mailer] ✅ Email sent to ${to}. MessageId: ${info.messageId}`)
-    return info
-  } catch (err) {
-    console.error(`[Mailer] ❌ Error sending email:`, err.message)
-    // Don't throw, just log so the background process doesn't crash
-    return null
+  const options = {
+    hostname: 'api.brevo.com',
+    port: 443,
+    path: '/v3/smtp/email',
+    method: 'POST',
+    headers: {
+      'accept': 'application/json',
+      'api-key': apiKey,
+      'content-type': 'application/json',
+      'content-length': data.length,
+    },
   }
+
+  console.log(`[Mailer] Sending OTP to: ${to} via Brevo API`)
+
+  return new Promise((resolve, reject) => {
+    const req = https.request(options, (res) => {
+      let responseBody = ''
+      res.on('data', (chunk) => { responseBody += chunk })
+      res.on('end', () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          console.log(`[Mailer] ✅ Email sent successfully! Status: ${res.statusCode}`)
+          resolve(JSON.parse(responseBody))
+        } else {
+          console.error(`[Mailer] ❌ Brevo API Error (${res.statusCode}):`, responseBody)
+          resolve(null)
+        }
+      })
+    })
+
+    req.on('error', (err) => {
+      console.error(`[Mailer] ❌ Network Error:`, err.message)
+      resolve(null)
+    })
+
+    req.write(data)
+    req.end()
+  })
 }
 
 module.exports = { sendOTPEmail }
