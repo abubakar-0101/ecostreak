@@ -78,14 +78,16 @@ const sendOTPEmail = async (to, otp) => {
     </html>
   `
 
+  console.log(`[Mailer] Attempting to send OTP to: ${to}`)
   const info = await transporter.sendMail({
-    from: process.env.MAIL_FROM || 'EcoStreak <noreply@ecostreak.app>',
+    from: process.env.MAIL_FROM || `EcoStreak <${process.env.MAIL_USER}>`,
     to,
     subject: '🌿 Your EcoStreak verification code',
     html,
     text: `Your EcoStreak verification code is: ${otp}\n\nThis code expires in 10 minutes.`,
   })
 
+  console.log(`[Mailer] Email sent successfully to ${to}. MessageId: ${info.messageId}`)
   return info
 }
 
