@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "EcoStreak – 30 Day Sustainability Challenge",
   "scripts": {
+    "start": "node server/index.js",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
