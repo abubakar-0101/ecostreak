@@ -8,10 +8,15 @@ const transporter = nodemailer.createTransport({
   host: process.env.MAIL_HOST || 'smtp.gmail.com',
   port: parseInt(process.env.MAIL_PORT || '587', 10),
   secure: process.env.MAIL_PORT === '465',
+  pool: true, // use a pool of connections instead of one-off
   auth: {
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
   },
+  tls: {
+    rejectUnauthorized: false, // helps with handshake issues in some environments
+    minVersion: 'TLSv1.2'
+  }
 })
 
 /**
