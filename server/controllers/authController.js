@@ -41,9 +41,11 @@ const register = async (req, res, next) => {
         existing.otpExpiry = new Date(Date.now() + OTP_TTL_MS)
         await existing.save({ validateBeforeSave: false })
 
-        try { await sendOTPEmail(email, otp) } catch (_) {
-          if (process.env.NODE_ENV !== 'production') console.log(`[DEV] OTP for ${email}: ${otp}`)
-        }
+        // Send email in background so the request doesn't hang on slow SMTP servers
+        sendOTPEmail(email, otp).catch(err => console.error('[Mailer] Background error:', err.message))
+        
+        if (process.env.NODE_ENV !== 'production') console.log(`[DEV] OTP for ${email}: ${otp}`)
+        
         return res.json({ message: 'OTP resent – check your email.', email, requiresOTP: true })
       }
       const field = existing.email === email ? 'Email' : 'Username'
@@ -61,12 +63,10 @@ const register = async (req, res, next) => {
       otpExpiry: new Date(Date.now() + OTP_TTL_MS),
     })
 
-    try {
-      await sendOTPEmail(email, otp)
-    } catch (mailErr) {
-      console.error('[Mailer] Failed to send OTP email:', mailErr.message)
-      if (process.env.NODE_ENV !== 'production') console.log(`[DEV] OTP for ${email}: ${otp}`)
-    }
+    // Send email in background so the request doesn't hang
+    sendOTPEmail(email, otp).catch(err => console.error('[Mailer] Background error:', err.message))
+    
+    if (process.env.NODE_ENV !== 'production') console.log(`[DEV] OTP for ${email}: ${otp}`)
 
     res.status(201).json({
       message: 'Account created! Check your email for the verification code.',
@@ -134,9 +134,10 @@ const resendOTP = async (req, res, next) => {
     user.otpExpiry = new Date(Date.now() + OTP_TTL_MS)
     await user.save({ validateBeforeSave: false })
 
-    try { await sendOTPEmail(email, otp) } catch (_) {
-      if (process.env.NODE_ENV !== 'production') console.log(`[DEV] Resent OTP for ${email}: ${otp}`)
-    }
+    // Send email in background
+    sendOTPEmail(email, otp).catch(err => console.error('[Mailer] Background error:', err.message))
+
+    if (process.env.NODE_ENV !== 'production') console.log(`[DEV] Resent OTP for ${email}: ${otp}`)
 
     res.json({ message: 'A new OTP has been sent to your email.' })
   } catch (err) { next(err) }
@@ -226,11 +227,10 @@ const forgotPassword = async (req, res, next) => {
     user.otpExpiry = new Date(Date.now() + OTP_TTL_MS)
     await user.save({ validateBeforeSave: false })
 
-    try {
-      await sendOTPEmail(email, otp)
-    } catch (_) {
-      if (process.env.NODE_ENV !== 'production') console.log(`[DEV] Password reset OTP for ${email}: ${otp}`)
-    }
+    // Send email in background
+    sendOTPEmail(email, otp).catch(err => console.error('[Mailer] Background error:', err.message))
+
+    if (process.env.NODE_ENV !== 'production') console.log(`[DEV] Password reset OTP for ${email}: ${otp}`)
 
     res.json({ message: 'If that email exists, a reset code was sent.', email })
   } catch (err) { next(err) }
