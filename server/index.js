@@ -60,6 +60,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(rateLimiter)
 
+// ── Root / Health check ───────────────────────────────────
+app.get('/', (req, res) => res.json({ status: 'active', app: 'EcoStreak API' }))
+
 // ── Routes ────────────────────────────────────────────────
 app.use('/api/v1/auth',        authRoutes)
 app.use('/api/v1/user',        userRoutes)
