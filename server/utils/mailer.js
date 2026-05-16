@@ -1,19 +1,28 @@
 /**
- * @fileoverview Email helpers using Resend HTTP API
- *
- * Railway blocks outbound SMTP ports (587/465), so we use Resend's
- * HTTP-based API instead. This sends via HTTPS (port 443) which is
- * always allowed on PaaS platforms.
+ * @fileoverview Email helpers using Brevo (formerly Sendinblue) SMTP Relay
  */
-const { Resend } = require('resend')
-
-if (!process.env.RESEND_API_KEY) {
-  console.error('[Mailer] ❌ Error: RESEND_API_KEY is not defined in environment variables.')
-}
-const resend = new Resend(process.env.RESEND_API_KEY)
+const nodemailer = require('nodemailer')
 
 /**
- * Send OTP verification email via Resend
+ * Create Brevo transporter
+ * Brevo allows sending to any recipient as long as the sender is verified.
+ */
+const transporter = nodemailer.createTransport({
+  host: 'smtp-relay.brevo.com',
+  port: 465,
+  secure: true, // Use SSL for port 465
+  auth: {
+    user: process.env.MAIL_USER || 'ecostreaksupport@gmail.com',
+    pass: process.env.BREVO_SMTP_KEY,
+  },
+  // Essential for reliability on Railway
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 15000,
+})
+
+/**
+ * Send OTP verification email
  * @param {string} to - recipient email
  * @param {string} otp - 6-digit OTP code
  */
@@ -71,27 +80,21 @@ const sendOTPEmail = async (to, otp) => {
     </html>
   `
 
-  const fromAddress = process.env.MAIL_FROM || 'EcoStreak <onboarding@resend.dev>'
-  console.log(`[Mailer] Attempting to send OTP to: ${to} from: ${fromAddress}`)
+  console.log(`[Mailer] Attempting to send OTP to: ${to} via Brevo`)
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: fromAddress,
-      to: [to],
+    const info = await transporter.sendMail({
+      from: process.env.MAIL_FROM || `EcoStreak <${process.env.MAIL_USER}>`,
+      to,
       subject: '🌿 Your EcoStreak verification code',
       html,
-      text: `Your EcoStreak verification code is: ${otp}\n\nThis code expires in 10 minutes.`,
+      text: `Your EcoStreak verification code is: ${otp}`,
     })
-
-    if (error) {
-      console.error(`[Mailer] ❌ Resend API error:`, error)
-      return null
-    }
-
-    console.log(`[Mailer] ✅ Email sent successfully! ID: ${data.id}`)
-    return data
+    console.log(`[Mailer] ✅ Email sent to ${to}. MessageId: ${info.messageId}`)
+    return info
   } catch (err) {
-    console.error(`[Mailer] ❌ Unexpected error during send:`, err.message)
+    console.error(`[Mailer] ❌ Error sending email:`, err.message)
+    // Don't throw, just log so the background process doesn't crash
     return null
   }
 }
