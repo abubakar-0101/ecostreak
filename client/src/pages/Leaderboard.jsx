@@ -11,19 +11,19 @@ import { Card, SkeletonCard } from '../components/ui'
 
 const TABS = [
   { key: 'streak', label: '🍃 Streak' },
-  { key: 'score',  label: '🌿 Eco Score' },
+  { key: 'score', label: '🌿 Eco Score' },
 ]
 const PERIODS = [
-  { key: 'weekly',  label: 'This Week' },
+  { key: 'weekly', label: 'This Week' },
   { key: 'alltime', label: 'All Time' },
 ]
 
 export default function Leaderboard() {
   const user = useAuthStore((s) => s.user)
-  const [type,    setType]    = useState('streak')
-  const [period,  setPeriod]  = useState('alltime')
+  const [type, setType] = useState('streak')
+  const [period, setPeriod] = useState('alltime')
   const [entries, setEntries] = useState([])
-  const [myRank,  setMyRank]  = useState(null)
+  const [myRank, setMyRank] = useState(null)
   const [loading, setLoading] = useState(true)
   const socketRef = useRef(null)
 
@@ -39,7 +39,7 @@ export default function Leaderboard() {
   useEffect(() => { setLoading(true); fetchLeaderboard(type, period) }, [type, period])
 
   useEffect(() => {
-    socketRef.current = io('/', { path: '/socket.io', transports: ['websocket'] })
+    socketRef.current = io({ path: '/socket.io', transports: ['websocket', 'polling'] })
     socketRef.current.on('leaderboard:update', () => fetchLeaderboard())
     return () => socketRef.current?.disconnect()
   }, [])
@@ -50,7 +50,7 @@ export default function Leaderboard() {
   }, [type, period])
 
   // Tab pill styles
-  const tabActive   = { background: 'var(--green-mid)', color: '#FDFAF4' }
+  const tabActive = { background: 'var(--green-mid)', color: '#FDFAF4' }
   const tabInactive = { background: 'transparent', color: 'var(--color-text-muted)' }
 
   return (
@@ -162,12 +162,11 @@ function LeaderboardRow({ entry, rank, isCurrentUser }) {
       initial={{ opacity: 0, x: -16 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: Math.min(rank * 0.05, 0.5), duration: 0.45, ease: 'easeOut' }}
-      className={`flex items-center gap-4 px-5 py-4 border-b last:border-b-0 transition-colors ${
-        isCurrentUser ? 'leaderboard-row-current' : ''
-      }`}
+      className={`flex items-center gap-4 px-5 py-4 border-b last:border-b-0 transition-colors ${isCurrentUser ? 'leaderboard-row-current' : ''
+        }`}
       style={{
-        borderColor:  'var(--color-border)',
-        background:   isCurrentUser ? undefined : 'transparent',
+        borderColor: 'var(--color-border)',
+        background: isCurrentUser ? undefined : 'transparent',
       }}
       onMouseEnter={e => !isCurrentUser && (e.currentTarget.style.background = 'var(--leaf-shadow)')}
       onMouseLeave={e => !isCurrentUser && (e.currentTarget.style.background = 'transparent')}

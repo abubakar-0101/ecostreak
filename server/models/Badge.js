@@ -10,7 +10,7 @@ const badgeSchema = new mongoose.Schema(
     description:  { type: String, required: true },
     icon:         { type: String, required: true },
     condition:    { type: String, required: true },
-    rarity:       { type: String, enum: ['common','uncommon','rare','legendary'], default: 'common' },
+    rarity:       { type: String, enum: ['common','uncommon','rare','epic','legendary'], default: 'common' },
     earnedByCount:{ type: Number, default: 0 },
   },
   { timestamps: true }

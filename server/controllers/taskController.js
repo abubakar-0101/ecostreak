@@ -13,7 +13,7 @@ const getCurrentDayNumber = (challengeStartDate) => {
   const now = new Date()
   now.setHours(0, 0, 0, 0)
   const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24))
-  return Math.min(diff + 1, 30)
+  return Math.min(diff + 1, 100)
 }
 
 /** Compute consecutive streak from completed days array */
@@ -55,8 +55,8 @@ const getByDay = async (req, res, next) => {
   try {
     const { dayNumber } = req.params
     const day = parseInt(dayNumber)
-    if (isNaN(day) || day < 1 || day > 30) {
-      return res.status(400).json({ message: 'Invalid day number (1–30)' })
+    if (isNaN(day) || day < 1 || day > 100) {
+      return res.status(400).json({ message: 'Invalid day number (1–100)' })
     }
 
     const currentDay = getCurrentDayNumber(req.user.challengeStartDate)

@@ -106,7 +106,7 @@ export default function Dashboard() {
   const dayNumber = getDaysSinceStart(user?.challengeStartDate)
   const greeting  = getGreeting()
   const message   = getMotivationalMessage(streak.current)
-  const pct       = Math.min(100, Math.round((dayNumber / 30) * 100))
+  const pct       = Math.min(100, Math.round((dayNumber / 100) * 100))
 
   if (loading) {
     return (
@@ -144,7 +144,7 @@ export default function Dashboard() {
 
         {/* Leaf streak badge (replaces flame) */}
         <motion.div variants={revealVariant}>
-          <div className="streak-badge" aria-label={`Day ${dayNumber} of 30`}>
+          <div className="streak-badge" aria-label={`Day ${dayNumber} of 100`}>
             <span
               className="text-base"
               style={{ animation: streak.current > 0 ? 'leafSway 3s ease-in-out infinite' : 'none' }}
@@ -152,7 +152,7 @@ export default function Dashboard() {
             >
               🍃
             </span>
-            <span>Day {dayNumber} of 30</span>
+            <span>Day {dayNumber} of 100</span>
           </div>
           {streak.current === 0 && (
             <p className="text-xs mt-1.5 text-center" style={{ color: 'var(--bark)' }}>
@@ -170,17 +170,17 @@ export default function Dashboard() {
         <Card>
           <div className="flex justify-between text-sm mb-3 font-medium" style={{ color: 'var(--color-text)' }}>
             <span style={{ fontFamily: "'Lora', serif" }}>
-              Your forest is growing 🌱 — {dayNumber} of 30 days
+              Your forest is growing 🌱 — {dayNumber} of 100 days
             </span>
             <span style={{ color: 'var(--green-mid)', fontWeight: 600 }}>{pct}%</span>
           </div>
 
           {/* Animated progress bar */}
-          <ProgressBar value={dayNumber} max={30} />
+          <ProgressBar value={dayNumber} max={100} />
 
           {/* Milestone markers */}
           <div className="flex justify-between mt-3" aria-hidden="true">
-            {[7, 14, 21, 30].map(m => (
+            {[25, 50, 75, 100].map(m => (
               <div key={m} className="flex flex-col items-center gap-1">
                 <div
                   className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${
@@ -350,7 +350,7 @@ export default function Dashboard() {
               Challenge Complete!
             </h3>
             <p className="mb-5" style={{ color: 'var(--color-text-muted)' }}>
-              You've finished all 30 days. Your forest is fully grown 🌿
+              You've finished all 100 days. Your forest is fully grown 🌿
             </p>
             <Link to="/report" className="btn-primary inline-flex">View My Impact Report →</Link>
           </div>

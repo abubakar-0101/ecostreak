@@ -11,8 +11,9 @@ const User = require('../models/User')
 const CONDITIONS = {
   first_leaf:     (u) => u.completedDays.length >= 1,
   green_week:     (u) => u.currentStreak >= 7,
-  halfway_hero:   (u) => u.currentStreak >= 15,
-  eco_warrior:    (u) => u.completedDays.length >= 30,
+  month_master:   (u) => u.currentStreak >= 30,
+  halfway_hero:   (u) => u.currentStreak >= 50,
+  eco_warrior:    (u) => u.completedDays.length >= 100,
   water_guardian: (u) => u.totalWaterSaved >= 100,
   carbon_crusher: (u) => u.totalCO2Reduced >= 500,
   waste_buster:   (u) => u.totalPlasticAvoided >= 200,

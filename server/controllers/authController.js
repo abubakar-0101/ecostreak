@@ -42,7 +42,7 @@ const register = async (req, res, next) => {
         await existing.save({ validateBeforeSave: false })
 
         try { await sendOTPEmail(email, otp) } catch (_) {
-          console.log(`[DEV] OTP for ${email}: ${otp}`)
+          if (process.env.NODE_ENV !== 'production') console.log(`[DEV] OTP for ${email}: ${otp}`)
         }
         return res.json({ message: 'OTP resent – check your email.', email, requiresOTP: true })
       }
@@ -65,8 +65,7 @@ const register = async (req, res, next) => {
       await sendOTPEmail(email, otp)
     } catch (mailErr) {
       console.error('[Mailer] Failed to send OTP email:', mailErr.message)
-      // In dev, log OTP to console as fallback
-      console.log(`[DEV] OTP for ${email}: ${otp}`)
+      if (process.env.NODE_ENV !== 'production') console.log(`[DEV] OTP for ${email}: ${otp}`)
     }
 
     res.status(201).json({
@@ -136,7 +135,7 @@ const resendOTP = async (req, res, next) => {
     await user.save({ validateBeforeSave: false })
 
     try { await sendOTPEmail(email, otp) } catch (_) {
-      console.log(`[DEV] Resent OTP for ${email}: ${otp}`)
+      if (process.env.NODE_ENV !== 'production') console.log(`[DEV] Resent OTP for ${email}: ${otp}`)
     }
 
     res.json({ message: 'A new OTP has been sent to your email.' })
@@ -154,12 +153,12 @@ const login = async (req, res, next) => {
     const user = await User.findOne({ email })
 
     if (!user) {
-      return res.status(401).json({ message: 'No account found with this email address.' })
+      return res.status(401).json({ message: 'Invalid email or password.' })
     }
 
     const passwordMatch = await user.comparePassword(password)
     if (!passwordMatch) {
-      return res.status(401).json({ message: 'Incorrect password. Please try again.' })
+      return res.status(401).json({ message: 'Invalid email or password.' })
     }
 
     // OTP is only enforced during new registration — not on login.
@@ -216,33 +215,53 @@ const refreshToken = async (req, res, next) => {
 const forgotPassword = async (req, res, next) => {
   try {
     const { email } = req.body
+    if (!email) return res.status(400).json({ message: 'Email is required' })
+
     const user = await User.findOne({ email })
     // Always return 200 to avoid email enumeration
-    if (!user) return res.json({ message: 'If that email exists, a reset link was sent.' })
+    if (!user) return res.json({ message: 'If that email exists, a reset code was sent.' })
 
-    const resetToken = signAccessToken({ id: user._id, type: 'reset' })
-    // In production: send email via Nodemailer
-    console.log(`[DEV] Password reset token for ${email}: ${resetToken}`)
+    const otp = generateOTP()
+    user.otpCode = otp
+    user.otpExpiry = new Date(Date.now() + OTP_TTL_MS)
+    await user.save({ validateBeforeSave: false })
 
-    res.json({ message: 'If that email exists, a reset link was sent.', dev_token: resetToken })
+    try {
+      await sendOTPEmail(email, otp)
+    } catch (_) {
+      if (process.env.NODE_ENV !== 'production') console.log(`[DEV] Password reset OTP for ${email}: ${otp}`)
+    }
+
+    res.json({ message: 'If that email exists, a reset code was sent.', email })
   } catch (err) { next(err) }
 }
 
 /* ─── POST /auth/reset-password ─────────────────────────────────────────── */
 const resetPassword = async (req, res, next) => {
   try {
-    const { token, password } = req.body
-    if (!token || !password) return res.status(400).json({ message: 'Token and password are required' })
+    const { email, otp, password } = req.body
+    if (!email || !otp || !password) return res.status(400).json({ message: 'Email, OTP, and new password are required' })
 
-    const { verifyAccessToken } = require('../utils/jwt')
-    const decoded = verifyAccessToken(token)
-    if (decoded.type !== 'reset') return res.status(400).json({ message: 'Invalid reset token' })
+    const user = await User.findOne({ email })
+    if (!user) return res.status(400).json({ message: 'Invalid request' })
 
-    const user = await User.findById(decoded.id)
-    if (!user) return res.status(404).json({ message: 'User not found' })
+    if (!user.otpCode || !user.otpExpiry) {
+      return res.status(400).json({ message: 'No OTP was issued. Please request a new one.' })
+    }
+
+    if (new Date() > user.otpExpiry) {
+      return res.status(410).json({ message: 'OTP has expired. Please request a new one.' })
+    }
+
+    if (user.otpCode !== String(otp).trim()) {
+      return res.status(401).json({ message: 'Incorrect OTP code. Please try again.' })
+    }
 
     user.passwordHash = password
+    user.otpCode = null
+    user.otpExpiry = null
     await user.save()
+
     res.json({ message: 'Password reset successfully' })
   } catch (err) { next(err) }
 }

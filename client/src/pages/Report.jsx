@@ -9,13 +9,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Bar, Pie, Line } from 'react-chartjs-2'
 import {
   Chart as ChartJS, CategoryScale, LinearScale, BarElement,
-  ArcElement, LineElement, PointElement, Title, Tooltip, Legend,
+  ArcElement, LineElement, PointElement, Title, Tooltip, Legend, Filler,
 } from 'chart.js'
 import { impactAPI } from '../services/api'
 import { useAuthStore } from '../store'
 import { Card, SkeletonCard, Button } from '../components/ui'
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, LineElement, PointElement, Title, Tooltip, Legend)
+ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, LineElement, PointElement, Title, Tooltip, Legend, Filler)
 
 // ─── Falling leaves particle system ─────────────────────────────────────────
 function LeafParticles({ count = 18 }) {
@@ -58,13 +58,24 @@ const makeOpts = () => ({
     },
   },
   scales: {
+    x: {
+      grid:  { display: false },
+      ticks: { font: { family: "'DM Sans', sans-serif" }, color: '#5A6B4A' },
+    },
     y: {
+      type: 'linear',
+      display: true,
+      position: 'left',
       beginAtZero: true,
       grid:  { color: 'rgba(74,124,47,0.06)' },
       ticks: { font: { family: "'DM Sans', sans-serif" }, color: '#5A6B4A' },
     },
-    x: {
-      grid:  { display: false },
+    y1: {
+      type: 'linear',
+      display: true,
+      position: 'right',
+      beginAtZero: true,
+      grid: { drawOnChartArea: false },
       ticks: { font: { family: "'DM Sans', sans-serif" }, color: '#5A6B4A' },
     },
   },
@@ -80,8 +91,8 @@ export default function Report() {
     impactAPI.getReport()
       .then(({ data }) => {
         setReport(data)
-        // Trigger falling leaves on load if 30 days complete
-        if (data?.completedDays >= 30) {
+        // Trigger falling leaves on load if 100 days complete
+        if (data?.completedDays >= 100) {
           setTimeout(() => setShowLeaves(true), 600)
           setTimeout(() => setShowLeaves(false), 2800)
         }
@@ -101,8 +112,8 @@ export default function Report() {
   const barData = {
     labels,
     datasets: [
-      { label: 'Water (L)',  data: days.map(d => d.waterSaved),  backgroundColor: 'rgba(59,126,168,0.55)', borderRadius: 5 },
-      { label: 'CO₂ (g)',   data: days.map(d => d.co2Reduced),  backgroundColor: 'rgba(74,124,47,0.55)',  borderRadius: 5 },
+      { label: 'Water (L)',  data: days.map(d => d.waterSaved),  backgroundColor: 'rgba(59,126,168,0.55)', borderRadius: 5, yAxisID: 'y' },
+      { label: 'CO₂ (g)',   data: days.map(d => d.co2Reduced),  backgroundColor: 'rgba(74,124,47,0.55)',  borderRadius: 5, yAxisID: 'y1' },
     ],
   }
 
@@ -149,7 +160,7 @@ export default function Report() {
           className="text-3xl font-bold"
           style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
         >
-          🌿 30-Day Impact Report
+          🌿 100-Day Impact Report
         </h1>
         <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>
           Your complete environmental contribution summary
@@ -200,7 +211,7 @@ export default function Report() {
             <h3 className="font-bold mb-4" style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}>
               🌿 By Category
             </h3>
-            <Pie data={pieData} options={{ ...opts, scales: undefined }} />
+            <Pie data={pieData} options={(() => { const { scales, ...rest } = opts; return rest; })()} />
           </Card>
         </motion.div>
       )}
@@ -228,8 +239,8 @@ export default function Report() {
           {(() => {
             const isDemo = user?.email?.endsWith('@ecostreak.app')
             const done = report?.completedDaysCount ?? 0
-            const pct  = Math.min(100, Math.round((done / 30) * 100))
-            const isUnlocked = isDemo || done >= 30
+            const pct  = Math.min(100, Math.round((done / 100) * 100))
+            const isUnlocked = isDemo || done >= 100
 
             return (
               <div className="flex items-center justify-between flex-wrap gap-4">
@@ -254,7 +265,7 @@ export default function Report() {
                     ) : (
                       <div className="mt-1.5 space-y-1.5">
                         <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-                          Complete all 30 days to unlock — <strong style={{ color: 'var(--green-mid)' }}>{done}/30 done</strong>
+                          Complete all 100 days to unlock — <strong style={{ color: 'var(--green-mid)' }}>{done}/100 done</strong>
                         </p>
                         <div className="progress-bar-track" style={{ height: '6px', maxWidth: '220px' }}>
                           <div className="progress-bar-fill" style={{ width: `${pct}%` }} />
@@ -277,7 +288,7 @@ export default function Report() {
                       border: '1px solid var(--color-border)',
                       cursor: 'not-allowed',
                     }}
-                    title={`Complete ${30 - done} more day${30 - done !== 1 ? 's' : ''} to unlock`}
+                    title={`Complete ${100 - done} more day${100 - done !== 1 ? 's' : ''} to unlock`}
                   >
                     🔒 Locked
                   </span>

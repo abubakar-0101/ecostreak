@@ -20,13 +20,13 @@ const getCalendar = async (req, res, next) => {
     start.setHours(0, 0, 0, 0)
     const now = new Date()
     now.setHours(0, 0, 0, 0)
-    const currentDay = Math.min(Math.floor((now - start) / 86400000) + 1, 30)
+    const currentDay = Math.min(Math.floor((now - start) / 86400000) + 1, 100)
 
     const progressRecords = await UserProgress.find({ userId: user._id })
     const progressMap = {}
     progressRecords.forEach(p => { progressMap[p.dayNumber] = p })
 
-    const days = Array.from({ length: 30 }, (_, i) => {
+    const days = Array.from({ length: 100 }, (_, i) => {
       const dayNum = i + 1
       const prog = progressMap[dayNum]
       return {

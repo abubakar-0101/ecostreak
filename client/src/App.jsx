@@ -24,6 +24,7 @@ const Report     = lazy(() => import('./pages/Report'))
 const Profile    = lazy(() => import('./pages/Profile'))
 const NotFound     = lazy(() => import('./pages/NotFound'))
 const Certificate  = lazy(() => import('./pages/Certificate'))
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 
 // ─── PROTECTED ROUTE WRAPPER ────────────────────────────────
 const ProtectedRoute = ({ children }) => {
@@ -80,6 +81,7 @@ export default function App() {
           <Route path="/" element={<PublicRoute><Landing /></PublicRoute>} />
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
           <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+          <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
           <Route path="/verify-otp" element={<VerifyOTP />} />
 
           {/* ── Protected Routes (inside AppLayout) ── */}

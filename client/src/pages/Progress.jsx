@@ -1,5 +1,5 @@
 /**
- * @fileoverview Progress Calendar – 30-day visual grid with vine-growth ring
+ * @fileoverview Progress Calendar – 100-day visual grid with vine-growth ring
  * Nature aesthetic: earthy calendar cells, circular forest-green progress ring,
  * leaf-shadow milestone markers, gentle stagger reveal on cells
  */
@@ -12,7 +12,7 @@ import { getDaysSinceStart, MILESTONES } from '../utils/helpers'
 import { Card, SkeletonCard, ProgressBar } from '../components/ui'
 
 // ─── Circular vine-growth progress ring ─────────────────────────────────────
-function VineRing({ completed, total = 30 }) {
+function VineRing({ completed, total = 100 }) {
   const radius        = 52
   const circumference = 2 * Math.PI * radius
   const pct           = Math.min(1, completed / total)
@@ -126,7 +126,7 @@ export default function Progress() {
           Progress Tracker
         </h1>
         <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>
-          Your 30-day eco journey, day by day
+          Your 100-day eco journey, day by day
         </p>
       </motion.div>
 
@@ -138,7 +138,7 @@ export default function Progress() {
       >
         {/* Vine-growth ring */}
         <Card className="flex items-center justify-center py-4">
-          <VineRing completed={completed} total={30} />
+          <VineRing completed={completed} total={100} />
         </Card>
 
         {/* Streak + stats grid */}
@@ -146,7 +146,7 @@ export default function Progress() {
           {[
             { icon: '🍃', label: 'Current Streak', value: `${streak.current} days`, color: 'var(--green-mid)' },
             { icon: '🌿', label: 'Longest Streak',  value: `${streak.longest} days`, color: 'var(--green-deep)' },
-            { icon: '✅', label: 'Days Complete',   value: `${completed}/30`,         color: 'var(--bark)' },
+            { icon: '✅', label: 'Days Complete',   value: `${completed}/100`,         color: 'var(--bark)' },
             { icon: '📅', label: 'Current Day',     value: `Day ${dayNumber}`,        color: '#3B7EA8' },
           ].map(({ icon, label, value, color }) => (
             <Card key={label} className="text-center py-5 px-3">
@@ -171,9 +171,9 @@ export default function Progress() {
             style={{ color: 'var(--color-text)' }}
           >
             <span style={{ fontFamily: "'Lora', serif" }}>Challenge Progress</span>
-            <span style={{ color: 'var(--green-mid)' }}>{completed}/30 days</span>
+            <span style={{ color: 'var(--green-mid)' }}>{completed}/100 days</span>
           </div>
-          <ProgressBar value={completed} max={30} />
+          <ProgressBar value={completed} max={100} />
 
           {/* Milestone markers */}
           <div className="flex justify-between mt-3" aria-hidden="true">
@@ -199,7 +199,7 @@ export default function Progress() {
         </Card>
       </motion.div>
 
-      {/* ── 30-Day Calendar grid ── */}
+      {/* ── 100-Day Calendar grid ── */}
       <motion.div
         initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.22, ease: 'easeOut' }}
@@ -209,11 +209,11 @@ export default function Progress() {
             className="text-lg font-bold mb-5"
             style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
           >
-            🌿 30-Day Calendar
+            🌿 100-Day Calendar
           </h2>
 
-          <div className="grid grid-cols-6 sm:grid-cols-10 gap-2">
-            {Array.from({ length: 30 }, (_, i) => {
+          <div className="grid grid-cols-10 sm:grid-cols-20 gap-2">
+            {Array.from({ length: 100 }, (_, i) => {
               const dayNum  = i + 1
               const dayData = calendar.find(d => d.dayNumber === dayNum)
               const status  = dayData?.status || (dayNum > dayNumber ? 'future' : 'missed')

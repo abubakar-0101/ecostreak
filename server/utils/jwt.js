@@ -3,8 +3,12 @@
  */
 const jwt = require('jsonwebtoken')
 
-const ACCESS_SECRET  = process.env.JWT_ACCESS_SECRET  || 'ecostreak_access_secret'
-const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'ecostreak_refresh_secret'
+const ACCESS_SECRET  = process.env.JWT_ACCESS_SECRET
+const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET
+
+if (!ACCESS_SECRET || !REFRESH_SECRET) {
+  throw new Error('FATAL: JWT secrets not configured. Set JWT_ACCESS_SECRET and JWT_REFRESH_SECRET in your .env file.')
+}
 
 /**
  * Signs a short-lived access token (15 min)

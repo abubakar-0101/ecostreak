@@ -67,6 +67,78 @@ function AlertBanner({ message, type = 'error' }) {
   )
 }
 
+/* ── Password Strength Rules & Meter ──────────────────────────────────── */
+const PASSWORD_RULES = [
+  { key: 'length',    label: 'At least 8 characters',        test: (p) => p.length >= 8 },
+  { key: 'uppercase', label: 'One uppercase letter (A–Z)',    test: (p) => /[A-Z]/.test(p) },
+  { key: 'lowercase', label: 'One lowercase letter (a–z)',    test: (p) => /[a-z]/.test(p) },
+  { key: 'number',    label: 'One number (0–9)',              test: (p) => /\d/.test(p) },
+  { key: 'special',   label: 'One special character (!@#$…)', test: (p) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(p) },
+]
+
+function getPasswordStrength(password) {
+  const passed = PASSWORD_RULES.filter((r) => r.test(password)).length
+  if (passed <= 1) return { level: 0, label: 'Very Weak', color: '#E63946' }
+  if (passed === 2) return { level: 1, label: 'Weak', color: '#E76F51' }
+  if (passed === 3) return { level: 2, label: 'Fair', color: '#E9C46A' }
+  if (passed === 4) return { level: 3, label: 'Strong', color: '#52B788' }
+  return { level: 4, label: 'Very Strong', color: '#2D6A4F' }
+}
+
+function PasswordStrengthMeter({ password }) {
+  if (!password) return null
+  const strength = getPasswordStrength(password)
+  const barPercent = ((strength.level + 1) / 5) * 100
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.25 }}
+      className="mt-2 space-y-2"
+    >
+      {/* Strength bar */}
+      <div className="flex items-center gap-2">
+        <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--color-border)' }}>
+          <motion.div
+            className="h-full rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: `${barPercent}%`, background: strength.color }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+          />
+        </div>
+        <span className="text-xs font-semibold whitespace-nowrap" style={{ color: strength.color, minWidth: '72px', textAlign: 'right' }}>
+          {strength.label}
+        </span>
+      </div>
+
+      {/* Individual rules */}
+      <div className="grid grid-cols-1 gap-1">
+        {PASSWORD_RULES.map((rule) => {
+          const passed = rule.test(password)
+          return (
+            <motion.div
+              key={rule.key}
+              className="flex items-center gap-1.5 text-xs"
+              initial={{ opacity: 0, x: -6 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <span style={{ color: passed ? '#2D6A4F' : 'var(--color-text-muted)', fontSize: '10px' }}>
+                {passed ? '✅' : '○'}
+              </span>
+              <span style={{ color: passed ? '#2D6A4F' : 'var(--color-text-muted)', textDecoration: passed ? 'line-through' : 'none', opacity: passed ? 0.7 : 1 }}>
+                {rule.label}
+              </span>
+            </motion.div>
+          )
+        })}
+      </div>
+    </motion.div>
+  )
+}
+
 /* ── Input Field (outside Register to prevent remount) ──────────────────── */
 function Field({ id, name, label, type = 'text', placeholder, autoComplete, value, onChange, error }) {
   const [showPassword, setShowPassword] = useState(false)
@@ -322,6 +394,10 @@ export default function Register() {
     else if (!/\S+@\S+\.\S+/.test(form.email)) errs.email = 'Please enter a valid email address'
     if (!form.password) errs.password = 'Password is required'
     else if (form.password.length < 8) errs.password = 'Password must be at least 8 characters'
+    else if (!/[A-Z]/.test(form.password)) errs.password = 'Password needs at least one uppercase letter'
+    else if (!/[a-z]/.test(form.password)) errs.password = 'Password needs at least one lowercase letter'
+    else if (!/\d/.test(form.password)) errs.password = 'Password needs at least one number'
+    else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(form.password)) errs.password = 'Password needs at least one special character'
     if (!form.confirmPassword) errs.confirmPassword = 'Please confirm your password'
     else if (form.password !== form.confirmPassword) errs.confirmPassword = "Passwords don't match"
     if (!form.agreeTerms) errs.agreeTerms = 'You must agree to the terms to continue'
@@ -478,6 +554,9 @@ export default function Register() {
                     id="reg-password" name="password" label="Password" type="password" placeholder="Min. 8 characters"
                     autoComplete="new-password" value={form.password} onChange={handleChange} error={errors.password}
                   />
+                  <AnimatePresence>
+                    {form.password && <PasswordStrengthMeter password={form.password} />}
+                  </AnimatePresence>
                   <Field
                     id="reg-confirm" name="confirmPassword" label="Confirm Password" type="password" placeholder="••••••••"
                     autoComplete="new-password" value={form.confirmPassword} onChange={handleChange} error={errors.confirmPassword}
@@ -498,7 +577,7 @@ export default function Register() {
                         <span className="underline" style={{ color: 'var(--color-primary)' }}>
                           Terms of Service
                         </span>{' '}
-                        and commit to my 30-day eco challenge
+                        and commit to my 100-day eco challenge
                       </span>
                     </label>
                     <FieldError message={errors.agreeTerms} />

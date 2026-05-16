@@ -10,13 +10,20 @@ const getSummary = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id)
 
-    const progressRecords = await UserProgress.find({ userId: user._id }).populate('taskId')
-    const dailyBreakdown = progressRecords.map(p => ({
-      day:         p.dayNumber,
-      waterSaved:  p.taskId?.waterSaved || 0,
-      co2Reduced:  p.taskId?.co2Reduced || 0,
-      plasticAvoided: p.taskId?.plasticAvoided || 0,
-    }))
+    // Fallback to dayNumber matching in case seed script breaks taskId refs
+    const progressRecords = await UserProgress.find({ userId: user._id }).sort({ dayNumber: 1 })
+    const allTasks = await Task.find({})
+    const taskMap = allTasks.reduce((acc, t) => { acc[t.dayNumber] = t; return acc; }, {})
+
+    const dailyBreakdown = progressRecords.map(p => {
+      const task = taskMap[p.dayNumber] || {}
+      return {
+        day:         p.dayNumber,
+        waterSaved:  task.waterSaved || 0,
+        co2Reduced:  task.co2Reduced || 0,
+        plasticAvoided: task.plasticAvoided || 0,
+      }
+    })
 
     res.json({
       totalWaterSaved:     user.totalWaterSaved,
@@ -32,8 +39,11 @@ const getSummary = async (req, res, next) => {
 const getReport = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id)
-    const progressRecords = await UserProgress.find({ userId: user._id })
-      .populate('taskId').sort({ dayNumber: 1 })
+    
+    // Fallback to dayNumber matching
+    const progressRecords = await UserProgress.find({ userId: user._id }).sort({ dayNumber: 1 })
+    const allTasks = await Task.find({})
+    const taskMap = allTasks.reduce((acc, t) => { acc[t.dayNumber] = t; return acc; }, {})
 
     // Daily breakdown with cumulative streak tracking
     const dailyBreakdown = []
@@ -41,15 +51,16 @@ const getReport = async (req, res, next) => {
     let lastDay = 0
 
     progressRecords.forEach(p => {
+      const task = taskMap[p.dayNumber] || {}
       if (p.dayNumber === lastDay + 1) streak++
       else streak = 1
       lastDay = p.dayNumber
 
       dailyBreakdown.push({
         day:         p.dayNumber,
-        waterSaved:  p.taskId?.waterSaved || 0,
-        co2Reduced:  p.taskId?.co2Reduced || 0,
-        plasticAvoided: p.taskId?.plasticAvoided || 0,
+        waterSaved:  task.waterSaved || 0,
+        co2Reduced:  task.co2Reduced || 0,
+        plasticAvoided: task.plasticAvoided || 0,
         streakAtDay: streak,
       })
     })
@@ -57,7 +68,8 @@ const getReport = async (req, res, next) => {
     // Category breakdown for pie chart
     const categoryTotals = { water: 0, energy: 0, waste: 0, nature: 0 }
     progressRecords.forEach(p => {
-      if (p.taskId?.category) categoryTotals[p.taskId.category] += p.pointsEarned || 0
+      const task = taskMap[p.dayNumber] || {}
+      if (task.category) categoryTotals[task.category] += p.pointsEarned || 0
     })
 
     res.json({

@@ -284,13 +284,22 @@ export default function Login() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.18 }}
               >
-                <label
-                  htmlFor="login-password"
-                  className="block text-sm font-medium mb-1.5"
-                  style={{ color: 'var(--color-text)' }}
-                >
-                  Password
-                </label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label
+                    htmlFor="login-password"
+                    className="block text-sm font-medium"
+                    style={{ color: 'var(--color-text)' }}
+                  >
+                    Password
+                  </label>
+                  <Link
+                    to="/forgot-password"
+                    className="text-xs font-semibold hover:underline"
+                    style={{ color: 'var(--color-primary)' }}
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
                 <div className="relative">
                   <input
                     id="login-password"

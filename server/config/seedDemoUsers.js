@@ -3,7 +3,8 @@
  * completion levels (10–25 days), streaks, badges, and progress records.
  * Run with: node config/seedDemoUsers.js
  */
-require('dotenv').config()
+const path = require('path')
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') })
 const mongoose   = require('mongoose')
 const connectDB  = require('./db')
 const User       = require('../models/User')

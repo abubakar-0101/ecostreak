@@ -1,5 +1,5 @@
 /**
- * @fileoverview Certificate of Completion — EcoStreak 30-Day Challenge
+ * @fileoverview Certificate of Completion — EcoStreak 100-Day Challenge
  * Premium, print-ready certificate with nature-journal aesthetic.
  * Accessible at /certificate (protected route).
  */
@@ -119,8 +119,8 @@ function BorderPattern() {
 
 // ── Locked gate shown to users who haven't finished yet ─────────────────────
 function LockedCertificate({ completedDays }) {
-  const remaining = 30 - (completedDays ?? 0)
-  const pct = Math.min(100, Math.round(((completedDays ?? 0) / 30) * 100))
+  const remaining = 100 - (completedDays ?? 0)
+  const pct = Math.min(100, Math.round(((completedDays ?? 0) / 100) * 100))
   const circumference = 2 * Math.PI * 54
 
   return (
@@ -139,7 +139,7 @@ function LockedCertificate({ completedDays }) {
           🏆 Certificate of Completion
         </h1>
         <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-          Complete all 30 days to unlock your certificate
+          Complete all 100 days to unlock your certificate
         </p>
       </div>
 
@@ -179,7 +179,7 @@ function LockedCertificate({ completedDays }) {
           ████████████
         </div>
         <div style={{ fontFamily: "'Lora', serif", fontSize: '15px', color: '#4A5A3A', maxWidth: '480px' }}>
-          has successfully completed the EcoStreak 30-Day Sustainability Challenge…
+          has successfully completed the EcoStreak 100-Day Sustainability Challenge…
         </div>
       </div>
 
@@ -233,7 +233,7 @@ function LockedCertificate({ completedDays }) {
             Keep going, you're almost there!
           </h2>
           <p className="text-sm mb-5" style={{ color: 'var(--color-text-muted)', lineHeight: 1.7 }}>
-            You've completed <strong style={{ color: 'var(--green-mid)' }}>{completedDays ?? 0} of 30 days</strong>.
+            You've completed <strong style={{ color: 'var(--green-mid)' }}>{completedDays ?? 0} of 100 days</strong>.
             {' '}Complete the remaining <strong style={{ color: 'var(--green-mid)' }}>{remaining} day{remaining !== 1 ? 's' : ''}</strong> to unlock your official Certificate of Completion.
           </p>
           <div className="progress-bar-track mb-5">
@@ -270,9 +270,9 @@ export default function Certificate() {
     year: 'numeric', month: 'long', day: 'numeric',
   })
 
-  // Show locked state while loading or if < 30 days done (unless they are a demo user)
+  // Show locked state while loading or if < 100 days done (unless they are a demo user)
   const isDemo = user?.email?.endsWith('@ecostreak.app')
-  if (!loading && !isDemo && (stats?.completedDays ?? 0) < 30) {
+  if (!loading && !isDemo && (stats?.completedDays ?? 0) < 100) {
     return <LockedCertificate completedDays={stats?.completedDays ?? 0} />
   }
 
@@ -314,7 +314,7 @@ export default function Certificate() {
               🏆 Certificate of Completion
             </h1>
             <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-              Your 30-day EcoStreak challenge achievement
+              Your 100-day EcoStreak challenge achievement
             </p>
           </div>
           <div className="flex gap-3">
@@ -344,8 +344,8 @@ export default function Certificate() {
             position: 'relative',
             background: 'linear-gradient(160deg, #FDFAF4 0%, #F5F0E4 50%, #EEE8D5 100%)',
             borderRadius: '4px',
-            padding: '64px 72px',
             boxShadow: '0 20px 60px rgba(45,80,22,0.18), 0 4px 20px rgba(45,80,22,0.10)',
+            padding: '64px 72px',
             overflow: 'hidden',
             minHeight: '680px',
             display: 'flex',
@@ -417,7 +417,7 @@ export default function Certificate() {
               paddingLeft: '10px',
               marginLeft: '4px',
             }}>
-              30-Day Sustainability Challenge
+              100-Day Sustainability Challenge
             </span>
           </div>
 
@@ -476,7 +476,7 @@ export default function Certificate() {
             margin: '20px 0 32px',
           }}>
             has successfully completed the{' '}
-            <strong style={{ color: '#2D5016' }}>EcoStreak 30-Day Sustainability Challenge</strong>,
+            <strong style={{ color: '#2D5016' }}>EcoStreak 100-Day Sustainability Challenge</strong>,
             demonstrating consistent dedication to environmental responsibility,
             mindful living, and the preservation of our natural world.
           </p>
@@ -495,7 +495,7 @@ export default function Certificate() {
               <p style={{
                 fontFamily: "'Cinzel', serif", fontSize: '30px', fontWeight: 700,
                 color: '#2D5016', lineHeight: 1,
-              }}>30</p>
+              }}>100</p>
               <p style={{
                 fontFamily: "'DM Sans', sans-serif", fontSize: '10px',
                 color: '#5A6B4A', letterSpacing: '0.18em', textTransform: 'uppercase',
@@ -614,7 +614,7 @@ export default function Certificate() {
                   fontFamily: "'DM Sans', sans-serif", fontSize: '11px',
                   color: '#2D5016', fontWeight: 600, letterSpacing: '0.08em',
                 }}>
-                  ECO-30-{new Date().getFullYear()}
+                  ECO-100-{new Date().getFullYear()}
                 </p>
               </div>
               <p style={{

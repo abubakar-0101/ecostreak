@@ -29,7 +29,7 @@ const NAV_ITEMS = [
 
 export default function Sidebar() {
   const navigate   = useNavigate()
-  const { user, clearAuth }      = useAuthStore()
+  const { user, clearAuth } = useAuthStore()
   const { darkMode, toggleDarkMode } = useThemeStore()
 
   const handleLogout = async () => {
@@ -77,7 +77,7 @@ export default function Sidebar() {
               EcoStreak
             </h1>
             <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-              30-Day Challenge
+              100-Day Challenge
             </p>
           </div>
         </div>
@@ -111,13 +111,13 @@ export default function Sidebar() {
       <nav className="flex-1 p-3 overflow-y-auto space-y-0.5" aria-label="Main navigation">
         {NAV_ITEMS.map(({ to, icon: Icon, label, requiresCompletion }) => {
           const isDemo = user?.email?.endsWith('@ecostreak.app')
-          const isLocked = requiresCompletion && !isDemo && (user?.completedDays ?? 0) < 30
+          const isLocked = requiresCompletion && !isDemo && (user?.completedDays ?? 0) < 100
 
           if (isLocked) {
             return (
               <div
                 key={to}
-                title="Complete all 30 days to unlock"
+                title="Complete all 100 days to unlock"
                 className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium"
                 style={{ color: 'var(--color-border)', cursor: 'not-allowed', opacity: 0.6 }}
               >

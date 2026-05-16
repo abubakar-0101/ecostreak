@@ -6,7 +6,9 @@ import axios from 'axios'
 import { useAuthStore } from '../store'
 
 const api = axios.create({
-  baseURL: '/api/v1',
+  baseURL: import.meta.env.VITE_API_URL
+    ? `${import.meta.env.VITE_API_URL}/api/v1`
+    : '/api/v1',
   withCredentials: true, // send HttpOnly cookies (refresh token)
   timeout: 15000,
   headers: { 'Content-Type': 'application/json' },
@@ -40,7 +42,7 @@ api.interceptors.response.use(
   async (error) => {
     const original = error.config
 
-    if (error.response?.status === 401 && !original._retry) {
+    if (error.response?.status === 401 && !original._retry && !original.url.includes('/auth/')) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject })
@@ -90,8 +92,8 @@ export const authAPI = {
   login: (data) => api.post('/auth/login', data),
   logout: () => api.post('/auth/logout'),
   forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
-  resetPassword: (token, password) =>
-    api.post('/auth/reset-password', { token, password }),
+  resetPassword: (email, otp, password) =>
+    api.post('/auth/reset-password', { email, otp, password }),
 }
 
 /** User */

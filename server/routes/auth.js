@@ -14,7 +14,12 @@ const { authLimiter } = require('../middleware/rateLimiter')
 const registerRules = [
   body('username').trim().isLength({ min: 3, max: 30 }).withMessage('Username must be 3–30 characters'),
   body('email').isEmail().normalizeEmail().withMessage('Invalid email'),
-  body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
+  body('password')
+    .isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
+    .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
+    .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter')
+    .matches(/\d/).withMessage('Password must contain at least one number')
+    .matches(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/).withMessage('Password must contain at least one special character'),
 ]
 const loginRules = [
   body('email').isEmail().normalizeEmail().withMessage('Invalid email address'),

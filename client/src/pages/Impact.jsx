@@ -52,12 +52,14 @@ export default function Impact() {
         data:            summary?.dailyBreakdown?.map(d => d.waterSaved) || [],
         backgroundColor: 'rgba(59,126,168,0.55)',
         borderRadius:    6,
+        yAxisID:         'y',
       },
       {
         label:           'CO₂ Reduced (g)',
         data:            summary?.dailyBreakdown?.map(d => d.co2Reduced) || [],
         backgroundColor: 'rgba(74,124,47,0.55)',
         borderRadius:    6,
+        yAxisID:         'y1',
       },
     ],
   }
@@ -71,13 +73,24 @@ export default function Impact() {
       },
     },
     scales: {
+      x: {
+        grid: { display: false },
+        ticks: { font: { family: "'DM Sans', sans-serif" }, color: '#5A6B4A' },
+      },
       y: {
+        type: 'linear',
+        display: true,
+        position: 'left',
         beginAtZero: true,
         grid: { color: 'rgba(74,124,47,0.06)' },
         ticks: { font: { family: "'DM Sans', sans-serif" }, color: '#5A6B4A' },
       },
-      x: {
-        grid: { display: false },
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'right',
+        beginAtZero: true,
+        grid: { drawOnChartArea: false },
         ticks: { font: { family: "'DM Sans', sans-serif" }, color: '#5A6B4A' },
       },
     },

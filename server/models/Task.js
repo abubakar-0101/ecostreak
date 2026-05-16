@@ -1,11 +1,11 @@
 /**
- * @fileoverview Mongoose Task schema – represents one of 30 daily eco tasks
+ * @fileoverview Mongoose Task schema – represents one of 100 daily eco tasks
  */
 const mongoose = require('mongoose')
 
 const taskSchema = new mongoose.Schema(
   {
-    dayNumber:        { type: Number, required: true, unique: true, min: 1, max: 30 },
+    dayNumber:        { type: Number, required: true, unique: true, min: 1, max: 100 },
     title:            { type: String, required: true },
     description:      { type: String, required: true },
     category:         { type: String, enum: ['water','energy','waste','nature'], required: true },

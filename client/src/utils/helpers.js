@@ -13,8 +13,10 @@ export const getMotivationalMessage = (streak) => {
   if (streak <= 3)  return "You've started something amazing! 🌿"
   if (streak <= 7)  return "You're building a habit — keep going! 🔥"
   if (streak <= 14) return "You're in the zone. The planet thanks you! 🌍"
-  if (streak <= 29) return "Almost an Eco Warrior. Don't stop now! ⚡"
-  return "You are an Eco Warrior. You've changed the world! 🏆"
+  if (streak <= 29) return "One full month down. You're incredible! ⚡"
+  if (streak <= 49) return "30-day champion! Halfway to legend status! 🌳"
+  if (streak <= 99) return "Almost an Eco Warrior. Don't stop now! 🏆"
+  return "You are a 100-Day Eco Warrior. You've changed the world! 🏆"
 }
 
 // ─── TIME OF DAY GREETING ───────────────────────────────────
@@ -72,7 +74,7 @@ export const getDaysSinceStart = (startDate) => {
   const start = new Date(startDate)
   const now = new Date()
   const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24))
-  return Math.min(diff + 1, 30)
+  return Math.min(diff + 1, 100)
 }
 
 /**
@@ -106,8 +108,9 @@ export const isSameDay = (a, b) => {
 export const BADGE_CONFIG = [
   { id: 'first_leaf',    name: 'First Leaf',     icon: '🌱', rarity: 'common',    description: 'Complete your very first eco task' },
   { id: 'green_week',    name: 'Green Week',      icon: '🌿', rarity: 'uncommon',  description: 'Maintain a 7-day streak' },
-  { id: 'halfway_hero',  name: 'Halfway Hero',    icon: '⚡', rarity: 'rare',      description: 'Reach a 15-day streak' },
-  { id: 'eco_warrior',   name: 'Eco Warrior',     icon: '🏆', rarity: 'legendary', description: 'Complete all 30 days' },
+  { id: 'month_master',  name: 'Month Master',    icon: '🗓️', rarity: 'rare',      description: 'Maintain a 30-day streak' },
+  { id: 'halfway_hero',  name: 'Halfway Hero',    icon: '⚡', rarity: 'epic',      description: 'Reach a 50-day streak' },
+  { id: 'eco_warrior',   name: 'Eco Warrior',     icon: '🏆', rarity: 'legendary', description: 'Complete all 100 days' },
   { id: 'water_guardian',name: 'Water Guardian',  icon: '💧', rarity: 'rare',      description: 'Save 100 liters of water' },
   { id: 'carbon_crusher',name: 'Carbon Crusher',  icon: '🌍', rarity: 'rare',      description: 'Reduce 500g of CO₂' },
   { id: 'waste_buster',  name: 'Waste Buster',    icon: '♻️', rarity: 'uncommon',  description: 'Avoid 200g of plastic' },
@@ -130,7 +133,7 @@ export const CATEGORY_CONFIG = {
 }
 
 // ─── MILESTONE DAYS ─────────────────────────────────────────
-export const MILESTONES = [7, 14, 21, 30]
+export const MILESTONES = [25, 50, 75, 100]
 
 // ─── AVATAR PRESETS ─────────────────────────────────────────
 export const PRESET_AVATARS = [
