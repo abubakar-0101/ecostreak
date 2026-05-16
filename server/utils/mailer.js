@@ -1,26 +1,19 @@
 /**
- * @fileoverview Nodemailer transporter and email helpers
+ * @fileoverview Email helpers using Resend HTTP API
+ *
+ * Railway blocks outbound SMTP ports (587/465), so we use Resend's
+ * HTTP-based API instead. This sends via HTTPS (port 443) which is
+ * always allowed on PaaS platforms.
  */
-const nodemailer = require('nodemailer')
+const { Resend } = require('resend')
 
-/** Create transporter (uses SMTP env vars) */
-const transporter = nodemailer.createTransport({
-  host: process.env.MAIL_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.MAIL_PORT || '587', 10),
-  secure: process.env.MAIL_PORT === '465',
-  pool: true, // use a pool of connections instead of one-off
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS,
-  },
-  tls: {
-    rejectUnauthorized: false, // helps with handshake issues in some environments
-    minVersion: 'TLSv1.2'
-  }
-})
+if (!process.env.RESEND_API_KEY) {
+  console.error('[Mailer] ❌ Error: RESEND_API_KEY is not defined in environment variables.')
+}
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 /**
- * Send OTP verification email
+ * Send OTP verification email via Resend
  * @param {string} to - recipient email
  * @param {string} otp - 6-digit OTP code
  */
@@ -78,17 +71,29 @@ const sendOTPEmail = async (to, otp) => {
     </html>
   `
 
-  console.log(`[Mailer] Attempting to send OTP to: ${to}`)
-  const info = await transporter.sendMail({
-    from: process.env.MAIL_FROM || `EcoStreak <${process.env.MAIL_USER}>`,
-    to,
-    subject: '🌿 Your EcoStreak verification code',
-    html,
-    text: `Your EcoStreak verification code is: ${otp}\n\nThis code expires in 10 minutes.`,
-  })
+  const fromAddress = process.env.MAIL_FROM || 'EcoStreak <onboarding@resend.dev>'
+  console.log(`[Mailer] Attempting to send OTP to: ${to} from: ${fromAddress}`)
 
-  console.log(`[Mailer] Email sent successfully to ${to}. MessageId: ${info.messageId}`)
-  return info
+  try {
+    const { data, error } = await resend.emails.send({
+      from: fromAddress,
+      to: [to],
+      subject: '🌿 Your EcoStreak verification code',
+      html,
+      text: `Your EcoStreak verification code is: ${otp}\n\nThis code expires in 10 minutes.`,
+    })
+
+    if (error) {
+      console.error(`[Mailer] ❌ Resend API error:`, error)
+      return null
+    }
+
+    console.log(`[Mailer] ✅ Email sent successfully! ID: ${data.id}`)
+    return data
+  } catch (err) {
+    console.error(`[Mailer] ❌ Unexpected error during send:`, err.message)
+    return null
+  }
 }
 
-module.exports = { transporter, sendOTPEmail }
+module.exports = { sendOTPEmail }
