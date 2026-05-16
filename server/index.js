@@ -25,6 +25,7 @@ const leaderboardRoutes = require('./routes/leaderboard')
 const impactRoutes      = require('./routes/impact')
 
 const app    = express()
+app.set('trust proxy', 1) // trust first proxy (Railway) for rate limiting
 const server = http.createServer(app)
 
 // ── Socket.io ─────────────────────────────────────────────
