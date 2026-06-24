@@ -179,7 +179,7 @@ export default function ForgotPassword() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-6"
+      className="min-h-screen flex items-center justify-center p-4 sm:p-6"
       style={{ background: 'var(--color-bg)', position: 'relative', overflow: 'hidden' }}
     >
       {/* Decorative background glow */}
@@ -221,7 +221,7 @@ export default function ForgotPassword() {
           </p>
         </div>
 
-        <motion.div className="eco-card p-8" variants={shakeVariants} animate={shakeKey}>
+        <motion.div className="eco-card p-5 sm:p-8" variants={shakeVariants} animate={shakeKey}>
           <AnimatePresence mode="wait">
             {step === 1 ? (
               <motion.form

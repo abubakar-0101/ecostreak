@@ -233,7 +233,7 @@ export default function Login() {
 
           {/* Form card */}
           <motion.div
-            className="eco-card p-8"
+            className="eco-card p-5 sm:p-8"
             variants={shakeVariants}
             animate={shakeKey}
           >

@@ -240,7 +240,7 @@ export default function Dashboard() {
           <div className="flex items-start justify-between mb-4 flex-wrap gap-3">
             <div>
               {/* Day badge — circular bark-brown */}
-              <div className="flex items-center gap-2.5 mb-3">
+              <div className="flex flex-wrap items-center gap-2.5 mb-3">
                 <div
                   className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
                   style={{ background: 'var(--bark)', fontFamily: "'DM Sans', sans-serif" }}

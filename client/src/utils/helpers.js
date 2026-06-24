@@ -14,7 +14,7 @@ export const getMotivationalMessage = (streak) => {
   if (streak <= 7)  return "You're building a habit — keep going! 🔥"
   if (streak <= 14) return "You're in the zone. The planet thanks you! 🌍"
   if (streak <= 29) return "One full month down. You're incredible! ⚡"
-  if (streak <= 49) return "30-day champion! Halfway to legend status! 🌳"
+  if (streak <= 49) return "Halfway to legend status — keep growing! 🌳"
   if (streak <= 99) return "Almost an Eco Warrior. Don't stop now! 🏆"
   return "You are a 100-Day Eco Warrior. You've changed the world! 🏆"
 }

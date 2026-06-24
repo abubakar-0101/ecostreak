@@ -81,7 +81,7 @@ export default function Tasks() {
           Today's Eco Task
         </h1>
         <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>
-          Day {dayNumber} of 30
+          Day {dayNumber} of 100
         </p>
       </motion.div>
 
@@ -251,7 +251,7 @@ export default function Tasks() {
               All Done!
             </h3>
             <p style={{ color: 'var(--color-text-muted)' }}>
-              You've completed the full 30-day challenge. Your forest is grown 🌿
+              You've completed the full 100-day challenge. Your forest is grown 🌿
             </p>
           </div>
         </Card>

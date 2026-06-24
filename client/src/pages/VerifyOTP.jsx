@@ -96,7 +96,7 @@ export default function VerifyOTP() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-6"
+      className="min-h-screen flex items-center justify-center p-4 sm:p-6"
       style={{ background: 'var(--color-bg)', position: 'relative', overflow: 'hidden' }}
     >
       {/* Decorative background glow */}
@@ -124,7 +124,7 @@ export default function VerifyOTP() {
           </Link>
         </div>
 
-        <div className="eco-card p-10">
+        <div className="eco-card p-5 sm:p-10">
           {/* Animated email icon */}
           <div className="text-center mb-6">
             <motion.div
@@ -146,7 +146,7 @@ export default function VerifyOTP() {
           </div>
 
           {/* OTP input boxes */}
-          <div className="flex gap-3 justify-center mb-4" onPaste={handlePaste}>
+          <div className="flex gap-1.5 sm:gap-3 justify-center mb-4" onPaste={handlePaste}>
             {otp.map((digit, i) => (
               <motion.input
                 key={i}
@@ -158,7 +158,7 @@ export default function VerifyOTP() {
                 value={digit}
                 onChange={(e) => handleChange(i, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(i, e)}
-                className="w-12 h-14 text-center text-xl font-bold rounded-xl border-2 outline-none transition-all"
+                className="w-9 h-12 sm:w-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl border-2 outline-none transition-all"
                 style={{
                   background: 'var(--color-card)',
                   borderColor: error ? '#E63946' : digit ? 'var(--color-primary)' : 'var(--color-border)',

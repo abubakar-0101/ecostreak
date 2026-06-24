@@ -1,5 +1,5 @@
 /**
- * @fileoverview Impact controller – summary and 30-day report
+ * @fileoverview Impact controller – summary and 100-day report
  */
 const User         = require('../models/User')
 const UserProgress = require('../models/UserProgress')

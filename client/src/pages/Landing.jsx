@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 const FEATURES = [
-  { icon: '📅', title: '30 Daily Tasks',    desc: 'One simple eco-action per day, carefully curated for real, measurable impact.' },
+  { icon: '📅', title: '100 Daily Tasks',   desc: 'One simple eco-action per day, carefully curated for real, measurable impact.' },
   { icon: '🍃', title: 'Leaf Streak',       desc: 'Build momentum with daily streaks. Miss a day? Nature always gives you another chance.' },
   { icon: '🏅', title: 'Earn Badges',       desc: 'Unlock achievements as you hit milestones on your green journey.' },
   { icon: '🌍', title: 'Real Impact',       desc: 'Track water saved, CO₂ reduced, and plastic avoided in honest numbers.' },

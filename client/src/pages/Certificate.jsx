@@ -149,7 +149,7 @@ function LockedCertificate({ completedDays }) {
           position: 'relative',
           background: 'linear-gradient(160deg, #FDFAF4 0%, #F5F0E4 50%, #EEE8D5 100%)',
           borderRadius: '4px',
-          padding: '64px 72px',
+          padding: 'clamp(28px, 6vw, 64px) clamp(20px, 6vw, 72px)',
           overflow: 'hidden',
           minHeight: '500px',
           display: 'flex',
@@ -345,7 +345,7 @@ export default function Certificate() {
             background: 'linear-gradient(160deg, #FDFAF4 0%, #F5F0E4 50%, #EEE8D5 100%)',
             borderRadius: '4px',
             boxShadow: '0 20px 60px rgba(45,80,22,0.18), 0 4px 20px rgba(45,80,22,0.10)',
-            padding: '64px 72px',
+            padding: 'clamp(28px, 6vw, 64px) clamp(20px, 6vw, 72px)',
             overflow: 'hidden',
             minHeight: '680px',
             display: 'flex',
@@ -395,7 +395,7 @@ export default function Certificate() {
           }} />
 
           {/* ── Issuer logo row ── */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '28px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '28px', flexWrap: 'wrap' }}>
             <span style={{ fontSize: '28px' }}>🌱</span>
             <span style={{
               fontFamily: "'Cinzel', 'Lora', serif",
@@ -486,7 +486,7 @@ export default function Certificate() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '48px',
+            gap: 'clamp(20px, 5vw, 48px)',
             margin: '0 0 36px',
             flexWrap: 'wrap',
           }}>
@@ -561,7 +561,8 @@ export default function Certificate() {
             justifyContent: 'space-between',
             width: '100%',
             maxWidth: '560px',
-            gap: '32px',
+            gap: '20px',
+            flexWrap: 'wrap',
           }}>
             {/* Date issued */}
             <div style={{ flex: 1, textAlign: 'center' }}>

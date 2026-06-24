@@ -1,5 +1,5 @@
 /**
- * @fileoverview Report page – 30-day summary, earthy certificate, nature-themed charts
+ * @fileoverview Report page – 100-day summary, earthy certificate, nature-themed charts
  * Completion screen: falling leaves animation, heartfelt Lora message, earth impact stats
  */
 import React, { useEffect, useState } from 'react'

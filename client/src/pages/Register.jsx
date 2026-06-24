@@ -299,7 +299,7 @@ function OTPStep({ email, onSuccess }) {
       </div>
 
       {/* OTP boxes */}
-      <div className="flex gap-3 justify-center mb-4" onPaste={handleOTPPaste}>
+      <div className="flex gap-1.5 sm:gap-3 justify-center mb-4" onPaste={handleOTPPaste}>
         {otp.map((digit, i) => (
           <motion.input
             key={i}
@@ -310,7 +310,7 @@ function OTPStep({ email, onSuccess }) {
             value={digit}
             onChange={(e) => handleOTPChange(i, e.target.value)}
             onKeyDown={(e) => handleOTPKeyDown(i, e)}
-            className="w-12 h-14 text-center text-xl font-bold rounded-xl border-2 outline-none transition-all"
+            className="w-9 h-12 sm:w-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl border-2 outline-none transition-all"
             style={{
               background: 'var(--color-card)',
               borderColor: error ? '#E63946' : digit ? 'var(--color-primary)' : 'var(--color-border)',
@@ -449,7 +449,7 @@ export default function Register() {
   const currentStepIdx = step === 'form' ? 0 : step === 'otp' ? 1 : 2
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6" style={{ background: 'var(--color-bg)', position: 'relative', overflow: 'hidden' }}>
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6" style={{ background: 'var(--color-bg)', position: 'relative', overflow: 'hidden' }}>
       {/* Background decorative blobs */}
       <motion.div
         className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none"
@@ -523,7 +523,7 @@ export default function Register() {
         </div>
 
         {/* Card */}
-        <div className="eco-card p-8">
+        <div className="eco-card p-5 sm:p-8">
           <AnimatePresence mode="wait">
             {step === 'form' && (
               <motion.div
