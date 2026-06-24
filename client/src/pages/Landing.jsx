@@ -49,34 +49,34 @@ export default function Landing() {
           boxShadow:    'var(--shadow-sm)',
         }}
       >
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
             {/* Swaying leaf logo */}
             <span
-              className="text-xl"
+              className="text-xl flex-shrink-0"
               style={{ display: 'inline-block', animation: 'leafSway 3s ease-in-out infinite' }}
               aria-hidden="true"
             >
               🍃
             </span>
             <span
-              className="font-bold text-lg"
+              className="font-bold text-base sm:text-lg truncate"
               style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
             >
               EcoStreak
             </span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <Link
               to="/login"
-              className="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300"
+              className="px-3 sm:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 whitespace-nowrap"
               style={{ color: 'var(--color-text-muted)' }}
               onMouseEnter={e => e.currentTarget.style.background = 'var(--leaf-shadow)'}
               onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
             >
               Sign In
             </Link>
-            <Link to="/register" className="btn-primary text-sm py-2 px-5">
+            <Link to="/register" className="btn-primary text-sm py-2 px-3 sm:px-5 whitespace-nowrap">
               Join Free →
             </Link>
           </div>
