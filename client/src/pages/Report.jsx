@@ -25,7 +25,7 @@ function LeafParticles({ count = 18 }) {
     top:  `${-10 - Math.random() * 10}%`,
     delay: Math.random() * 1.2,
     size:  0.8 + Math.random() * 0.8,
-    emoji: ['energy_savings_leaf', 'eco', 'local_florist'][Math.floor(Math.random() * 3)],
+    emoji: ['local_florist', 'eco', 'local_florist'][Math.floor(Math.random() * 3)],
   }))
 
   return (

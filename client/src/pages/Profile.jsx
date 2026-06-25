@@ -200,7 +200,7 @@ export default function Profile() {
           className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           {[
-            { icon: 'energy_savings_leaf', label: 'Current Streak', value: `${stats.currentStreak}d`, color: 'var(--green-mid)' },
+            { icon: 'local_florist', label: 'Current Streak', value: `${stats.currentStreak}d`, color: 'var(--green-mid)' },
             { icon: 'eco',                 label: 'Longest Streak',  value: `${stats.longestStreak}d`,  color: 'var(--green-deep)' },
             { icon: 'public',              label: 'Eco Score',       value: stats.ecoScore,             color: 'var(--bark)' },
             { icon: 'military_tech',       label: 'Badges',          value: stats.badgeCount,           color: 'var(--color-gold)' },

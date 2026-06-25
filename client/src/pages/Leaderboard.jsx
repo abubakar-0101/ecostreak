@@ -10,7 +10,7 @@ import { useAuthStore } from '../store'
 import { Card, SkeletonCard } from '../components/ui'
 
 const TABS = [
-  { key: 'streak', icon: 'energy_savings_leaf', label: 'Streak' },
+  { key: 'streak', icon: 'local_florist', label: 'Streak' },
   { key: 'score',  icon: 'eco',                 label: 'Eco Score' },
 ]
 const PERIODS = [
@@ -202,7 +202,7 @@ function LeaderboardRow({ entry, rank, isCurrentUser }) {
           )}
         </p>
         <p className="text-xs flex items-center gap-1 mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-          <span aria-hidden="true" className="material-symbols-outlined" style={{ fontSize: '1em' }}>energy_savings_leaf</span>
+          <span aria-hidden="true" className="material-symbols-outlined" style={{ fontSize: '1em' }}>local_florist</span>
           {entry.currentStreak}d streak
         </p>
       </div>

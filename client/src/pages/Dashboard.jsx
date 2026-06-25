@@ -150,7 +150,7 @@ export default function Dashboard() {
               style={{ animation: streak.current > 0 ? 'leafSway 3s ease-in-out infinite' : 'none' }}
               aria-hidden="true"
             >
-              <span className="material-symbols-outlined">energy_savings_leaf</span>
+              <span className="material-symbols-outlined">local_florist</span>
             </span>
             <span>Day {dayNumber} of 100</span>
           </div>
@@ -209,7 +209,7 @@ export default function Dashboard() {
         className="grid grid-cols-2 md:grid-cols-4 gap-4"
       >
         <motion.div variants={revealVariant}>
-          <StatCard icon="energy_savings_leaf" label="Current Streak" value={`${streak.current}d`} color="var(--green-mid)" />
+          <StatCard icon="local_florist" label="Current Streak" value={`${streak.current}d`} color="var(--green-mid)" />
         </motion.div>
         <motion.div variants={revealVariant}>
           <StatCard icon="eco" label="Longest Streak" value={`${streak.longest}d`} color="var(--green-deep)" />

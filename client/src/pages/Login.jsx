@@ -10,7 +10,7 @@ import { authAPI } from '../services/api'
 import { Button } from '../components/ui'
 
 /* ── Floating leaf particles (decorative) ───────────────────────────────── */
-const LEAVES = ['eco', 'energy_savings_leaf', 'compost', 'local_florist', 'grass']
+const LEAVES = ['eco', 'local_florist', 'compost', 'local_florist', 'grass']
 
 function FloatingLeaf({ index }) {
   const leaf = LEAVES[index % LEAVES.length]

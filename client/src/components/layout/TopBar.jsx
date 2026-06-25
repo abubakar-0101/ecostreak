@@ -25,7 +25,7 @@ export default function TopBar() {
           style={{ display: 'inline-block', animation: 'leafSway 3s ease-in-out infinite' }}
           aria-hidden="true"
         >
-          <span className="material-symbols-outlined">energy_savings_leaf</span>
+          <span className="material-symbols-outlined">local_florist</span>
         </span>
         <span
           className="font-bold text-base"

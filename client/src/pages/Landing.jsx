@@ -9,7 +9,7 @@ import { motion } from 'framer-motion'
 
 const FEATURES = [
   { icon: 'calendar_today',      title: '100 Daily Tasks',   desc: 'One simple eco-action per day, carefully curated for real, measurable impact.' },
-  { icon: 'energy_savings_leaf', title: 'Leaf Streak',       desc: 'Build momentum with daily streaks. Miss a day? Nature always gives you another chance.' },
+  { icon: 'local_florist', title: 'Leaf Streak',       desc: 'Build momentum with daily streaks. Miss a day? Nature always gives you another chance.' },
   { icon: 'military_tech',       title: 'Earn Badges',       desc: 'Unlock achievements as you hit milestones on your green journey.' },
   { icon: 'public',              title: 'Real Impact',       desc: 'Track water saved, CO₂ reduced, and plastic avoided in honest numbers.' },
   { icon: 'emoji_events',        title: 'Leaderboard',       desc: 'Compete with eco warriors worldwide — top the global rankings.' },
@@ -57,7 +57,7 @@ export default function Landing() {
               style={{ display: 'inline-block', animation: 'leafSway 3s ease-in-out infinite' }}
               aria-hidden="true"
             >
-              <span className="material-symbols-outlined">energy_savings_leaf</span>
+              <span className="material-symbols-outlined">local_florist</span>
             </span>
             <span
               className="font-bold text-base sm:text-lg truncate"
@@ -164,7 +164,7 @@ export default function Landing() {
             className="mt-16 flex justify-center gap-4 flex-wrap"
             aria-hidden="true"
           >
-            {['compost', 'water_drop', 'recycling', 'public', 'energy_savings_leaf'].map((item, i) => (
+            {['compost', 'water_drop', 'recycling', 'public', 'local_florist'].map((item, i) => (
               <div
                 key={i}
                 className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl eco-card"
@@ -324,7 +324,7 @@ export default function Landing() {
         <div className="max-w-4xl mx-auto flex flex-col items-center gap-5">
           {/* Brand */}
           <p className="font-medium" style={{ color: 'var(--green-deep)', fontFamily: "'Lora', serif", fontSize: '1rem' }}>
-            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>energy_savings_leaf</span> EcoStreak – Built for the planet
+            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>local_florist</span> EcoStreak – Built for the planet
           </p>
 
           {/* Social & Contact links */}

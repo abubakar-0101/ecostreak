@@ -65,7 +65,7 @@ export default function Sidebar() {
               style={{ animation: 'leafSway 3s ease-in-out infinite', display: 'block' }}
               aria-hidden="true"
             >
-              <span className="material-symbols-outlined">energy_savings_leaf</span>
+              <span className="material-symbols-outlined">local_florist</span>
             </span>
           </div>
           <div>
@@ -99,7 +99,7 @@ export default function Sidebar() {
               </p>
               {/* Leaf streak instead of flame */}
               <p className="text-xs flex items-center gap-1 mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-                <span aria-hidden="true" className="material-symbols-outlined" style={{ fontSize: '1em' }}>energy_savings_leaf</span>
+                <span aria-hidden="true" className="material-symbols-outlined" style={{ fontSize: '1em' }}>local_florist</span>
                 {user.currentStreak || 0} day streak
               </p>
             </div>

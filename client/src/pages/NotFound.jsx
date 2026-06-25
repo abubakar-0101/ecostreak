@@ -18,7 +18,7 @@ export default function NotFound() {
         transition={{ duration: 5, ease: 'easeInOut', repeat: Infinity }}
         aria-hidden="true"
       >
-        <span className="material-symbols-outlined">energy_savings_leaf</span>
+        <span className="material-symbols-outlined">local_florist</span>
       </motion.div>
 
       {/* 404 in Lora — earthy, not neon */}

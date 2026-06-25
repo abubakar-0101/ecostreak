@@ -144,7 +144,7 @@ export default function Progress() {
         {/* Streak + stats grid */}
         <div className="grid grid-cols-2 gap-4">
           {[
-            { icon: 'energy_savings_leaf', label: 'Current Streak', value: `${streak.current} days`, color: 'var(--green-mid)' },
+            { icon: 'local_florist', label: 'Current Streak', value: `${streak.current} days`, color: 'var(--green-mid)' },
             { icon: 'eco',                 label: 'Longest Streak',  value: `${streak.longest} days`, color: 'var(--green-deep)' },
             { icon: 'check_circle',        label: 'Days Complete',   value: `${completed}/100`,         color: 'var(--bark)' },
             { icon: 'calendar_today',      label: 'Current Day',     value: `Day ${dayNumber}`,        color: '#3B7EA8' },
@@ -243,9 +243,9 @@ export default function Progress() {
                   }
                   title={`Day ${dayNum}${dayData?.completedAt ? ' – Completed' : ''}`}
                 >
-                  <span className="text-[10px] sm:text-xs leading-none">{dayNum}</span>
-                  <span className="mt-0.5 leading-none material-symbols-outlined" style={{ fontSize: '14px' }} aria-hidden="true">
-                    {status === 'complete' ? 'energy_savings_leaf' : status === 'missed' ? 'close' : status === 'future' ? 'lock' : ''}
+                  <span className="text-xs sm:text-xs leading-none font-bold">{dayNum}</span>
+                  <span className="hidden sm:inline-block mt-0.5 leading-none material-symbols-outlined" style={{ fontSize: '14px' }} aria-hidden="true">
+                    {status === 'complete' ? 'local_florist' : status === 'missed' ? 'close' : status === 'future' ? 'lock' : ''}
                   </span>
 
                   {/* Today dot */}
@@ -278,7 +278,7 @@ export default function Progress() {
             aria-label="Calendar legend"
           >
             {[
-              { color: 'var(--green-mid)', icon: 'energy_savings_leaf', label: 'Completed' },
+              { color: 'var(--green-mid)', icon: 'local_florist', label: 'Completed' },
               { color: 'var(--color-red)', icon: 'close',                label: 'Missed' },
               { color: 'var(--color-gold)', icon: 'star',                 label: 'Milestone' },
             ].map(({ color, icon, label }) => (
