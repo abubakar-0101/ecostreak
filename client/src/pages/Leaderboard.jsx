@@ -10,8 +10,8 @@ import { useAuthStore } from '../store'
 import { Card, SkeletonCard } from '../components/ui'
 
 const TABS = [
-  { key: 'streak', label: '🍃 Streak' },
-  { key: 'score', label: '🌿 Eco Score' },
+  { key: 'streak', icon: 'energy_savings_leaf', label: 'Streak' },
+  { key: 'score',  icon: 'eco',                 label: 'Eco Score' },
 ]
 const PERIODS = [
   { key: 'weekly', label: 'This Week' },
@@ -67,7 +67,7 @@ export default function Leaderboard() {
           Leaderboard
         </h1>
         <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>
-          Compete with eco warriors worldwide 🌍
+          Compete with eco warriors worldwide <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>public</span>
         </p>
       </motion.div>
 
@@ -85,7 +85,7 @@ export default function Leaderboard() {
               className="flex-1 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300"
               style={type === t.key ? tabActive : tabInactive}
             >
-              {t.label}
+              <span className="material-symbols-outlined" style={{ verticalAlign: 'middle', fontSize: '1em' }}>{t.icon}</span> {t.label}
             </button>
           ))}
         </div>
@@ -116,7 +116,7 @@ export default function Leaderboard() {
         <Card className="p-0 overflow-hidden">
           {entries.length === 0 ? (
             <div className="p-12 text-center">
-              <div className="text-4xl mb-3 animate-float" aria-hidden="true">🌱</div>
+              <div className="text-4xl mb-3 animate-float" aria-hidden="true"><span className="material-symbols-outlined">compost</span></div>
               <p
                 style={{ color: 'var(--color-text-muted)', fontFamily: "'Lora', serif", fontStyle: 'italic' }}
               >
@@ -155,7 +155,7 @@ export default function Leaderboard() {
 }
 
 function LeaderboardRow({ entry, rank, isCurrentUser }) {
-  const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : null
+  const rankIcon = rank === 1 ? 'looks_one' : rank === 2 ? 'looks_two' : rank === 3 ? 'looks_3' : null
 
   return (
     <motion.li
@@ -176,7 +176,7 @@ function LeaderboardRow({ entry, rank, isCurrentUser }) {
         className="w-10 text-center font-bold text-lg flex-shrink-0"
         style={{ fontFamily: "'Lora', serif", color: rank <= 3 ? undefined : 'var(--color-text-muted)' }}
       >
-        {rankIcon ?? <span>#{rank}</span>}
+        {rankIcon ? <span className="material-symbols-outlined">{rankIcon}</span> : <span>#{rank}</span>}
       </div>
 
       {/* Avatar */}
@@ -185,7 +185,7 @@ function LeaderboardRow({ entry, rank, isCurrentUser }) {
         style={{ background: 'var(--leaf-shadow)', border: '1.5px solid var(--green-light)' }}
         aria-hidden="true"
       >
-        {entry.avatar || '🌱'}
+        <span className="material-symbols-outlined">{entry.avatar || 'compost'}</span>
       </div>
 
       {/* Name + streak */}
@@ -202,7 +202,7 @@ function LeaderboardRow({ entry, rank, isCurrentUser }) {
           )}
         </p>
         <p className="text-xs flex items-center gap-1 mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-          <span aria-hidden="true">🍃</span>
+          <span aria-hidden="true" className="material-symbols-outlined" style={{ fontSize: '1em' }}>energy_savings_leaf</span>
           {entry.currentStreak}d streak
         </p>
       </div>

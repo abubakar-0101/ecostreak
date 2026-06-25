@@ -33,7 +33,7 @@ function FieldError({ message }) {
           exit={{ opacity: 0, y: -4, height: 0 }}
           transition={{ duration: 0.2 }}
         >
-          <span>⚠</span> {message}
+          <span className="material-symbols-outlined" style={{ fontSize: '1em' }}>warning</span> {message}
         </motion.p>
       )}
     </AnimatePresence>
@@ -59,7 +59,7 @@ function AlertBanner({ message, type = 'error' }) {
             color: isError ? '#C1121F' : '#2D6A4F',
           }}
         >
-          <span className="text-base flex-shrink-0">{isError ? '🔴' : '✅'}</span>
+          <span className="text-base flex-shrink-0 material-symbols-outlined">{isError ? 'error' : 'check_circle'}</span>
           <span>{message}</span>
         </motion.div>
       )}
@@ -126,7 +126,7 @@ function PasswordStrengthMeter({ password }) {
               transition={{ duration: 0.2 }}
             >
               <span style={{ color: passed ? '#2D6A4F' : 'var(--color-text-muted)', fontSize: '10px' }}>
-                {passed ? '✅' : '○'}
+                <span className="material-symbols-outlined" style={{ fontSize: '1em' }}>{passed ? 'check_circle' : 'radio_button_unchecked'}</span>
               </span>
               <span style={{ color: passed ? '#2D6A4F' : 'var(--color-text-muted)', textDecoration: passed ? 'line-through' : 'none', opacity: passed ? 0.7 : 1 }}>
                 {rule.label}
@@ -187,7 +187,7 @@ function Field({ id, name, label, type = 'text', placeholder, autoComplete, valu
             )}
           </button>
         )}
-        {error && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500 text-sm pointer-events-none">⚠</span>}
+        {error && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500 text-sm pointer-events-none material-symbols-outlined">warning</span>}
       </div>
       <FieldError message={error} />
     </div>
@@ -244,7 +244,7 @@ function OTPStep({ email, onSuccess }) {
     try {
       const { data } = await authAPI.verifyOTP(email, otpString)
       setAuth(data.user, data.accessToken)
-      toast.success('Email verified! Welcome to EcoStreak 🌿')
+      toast.success((t) => (<span>Email verified! Welcome to EcoStreak <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span></span>))
       onSuccess()
     } catch (err) {
       const msg = err.response?.data?.message || 'Verification failed. Try again.'
@@ -261,7 +261,7 @@ function OTPStep({ email, onSuccess }) {
     setResending(true)
     try {
       await authAPI.resendOTP(email)
-      toast.success('New code sent! Check your email. 📧')
+      toast.success((t) => (<span>New code sent! Check your email. <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>mail</span></span>))
       setResendCountdown(60)
       setOtp(['', '', '', '', '', ''])
       inputRefs.current[0]?.focus()
@@ -287,7 +287,7 @@ function OTPStep({ email, onSuccess }) {
           animate={{ y: [0, -8, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
         >
-          📧
+          <span className="material-symbols-outlined">mail</span>
         </motion.div>
         <h2 className="text-xl font-bold" style={{ color: 'var(--color-text)' }}>
           Verify your email
@@ -335,7 +335,7 @@ function OTPStep({ email, onSuccess }) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
           >
-            <span>🔴</span> {error}
+            <span className="material-symbols-outlined" style={{ fontSize: '1em' }}>error</span> {error}
           </motion.div>
         )}
       </AnimatePresence>
@@ -347,7 +347,7 @@ function OTPStep({ email, onSuccess }) {
         className="w-full"
         disabled={otpString.length < 6}
       >
-        ✅ Verify & Activate Account
+        <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>check_circle</span> Verify & Activate Account
       </Button>
 
       {/* Resend */}
@@ -418,7 +418,7 @@ export default function Register() {
 
       if (data.requiresOTP) {
         setPendingEmail(data.email || form.email)
-        toast.success('Check your email for the verification code! 📧')
+        toast.success((t) => (<span>Check your email for the verification code! <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>mail</span></span>))
         setStep('otp')
       } else {
         // Fallback (should not happen with current backend)
@@ -442,9 +442,9 @@ export default function Register() {
 
   /* ── Step: Progress indicator ─────────────────────────────────────────── */
   const steps = [
-    { label: 'Account Info', icon: '📝', key: 'form' },
-    { label: 'Verify Email', icon: '📧', key: 'otp' },
-    { label: 'Ready!', icon: '🌿', key: 'done' },
+    { label: 'Account Info', icon: 'edit_note', key: 'form' },
+    { label: 'Verify Email', icon: 'mail',      key: 'otp' },
+    { label: 'Ready!',       icon: 'eco',       key: 'done' },
   ]
   const currentStepIdx = step === 'form' ? 0 : step === 'otp' ? 1 : 2
 
@@ -473,7 +473,7 @@ export default function Register() {
         {/* Logo */}
         <div className="text-center mb-6">
           <Link to="/" className="inline-flex items-center gap-2 font-bold text-xl gradient-text">
-            🌿 EcoStreak
+            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> EcoStreak
           </Link>
           <h1 className="text-2xl font-bold mt-3" style={{ color: 'var(--color-text)' }}>
             {step === 'form' ? 'Create your account' : 'Verify your email'}
@@ -506,7 +506,7 @@ export default function Register() {
                     boxShadow: currentStepIdx === i ? '0 0 0 3px rgba(45,106,79,0.25)' : 'none',
                   }}
                 >
-                  {currentStepIdx > i ? '✓' : s.icon}
+                  <span className="material-symbols-outlined">{currentStepIdx > i ? 'check' : s.icon}</span>
                 </div>
                 <span className="text-xs" style={{ color: currentStepIdx >= i ? 'var(--color-primary)' : 'var(--color-text-muted)' }}>
                   {s.label}
@@ -584,7 +584,7 @@ export default function Register() {
                   </div>
 
                   <Button type="submit" loading={loading} className="w-full mt-4">
-                    🌱 Start My Eco Journey
+                    <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>compost</span> Start My Eco Journey
                   </Button>
                 </motion.form>
               </motion.div>

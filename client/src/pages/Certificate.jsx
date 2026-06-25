@@ -49,7 +49,7 @@ function OrnamentalSeal() {
       {/* Inner fill */}
       <circle cx="60" cy="60" r="33" fill="#4A7C2F" opacity="0.08" />
       {/* Leaf icon */}
-      <text x="60" y="68" textAnchor="middle" fontSize="28" dominantBaseline="middle">🌿</text>
+      <text x="60" y="68" textAnchor="middle" fontSize="28" dominantBaseline="middle" fontFamily="Material Symbols Outlined" fill="#2D5016">eco</text>
     </svg>
   )
 }
@@ -136,7 +136,7 @@ function LockedCertificate({ completedDays }) {
           className="text-2xl font-bold"
           style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
         >
-          🏆 Certificate of Completion
+          <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>emoji_events</span> Certificate of Completion
         </h1>
         <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
           Complete all 100 days to unlock your certificate
@@ -213,7 +213,7 @@ function LockedCertificate({ completedDays }) {
             position: 'absolute', inset: 0,
             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           }}>
-            <span style={{ fontSize: '28px' }}>🔒</span>
+            <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>lock</span>
             <span style={{
               fontFamily: "'Cinzel', serif", fontSize: '18px', fontWeight: 700,
               color: 'var(--green-deep)', lineHeight: 1,
@@ -243,7 +243,7 @@ function LockedCertificate({ completedDays }) {
             />
           </div>
           <Link to="/tasks" className="btn-primary text-sm px-6 py-3 inline-flex">
-            🌿 Go to Today's Task
+            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> Go to Today's Task
           </Link>
         </div>
       </div>
@@ -311,7 +311,7 @@ export default function Certificate() {
               className="text-2xl font-bold"
               style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
             >
-              🏆 Certificate of Completion
+              <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>emoji_events</span> Certificate of Completion
             </h1>
             <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
               Your 100-day EcoStreak challenge achievement
@@ -326,7 +326,7 @@ export default function Certificate() {
               onClick={handlePrint}
               className="btn-primary text-sm px-5 py-2"
             >
-              🖨️ Print / Save PDF
+              <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>print</span> Print / Save PDF
             </button>
           </div>
         </motion.div>
@@ -396,7 +396,7 @@ export default function Certificate() {
 
           {/* ── Issuer logo row ── */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '28px', flexWrap: 'wrap' }}>
-            <span style={{ fontSize: '28px' }}>🌱</span>
+            <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>compost</span>
             <span style={{
               fontFamily: "'Cinzel', 'Lora', serif",
               fontSize: '18px',
@@ -535,12 +535,12 @@ export default function Certificate() {
               justifyContent: 'space-around',
             }}>
               {[
-                { value: `${stats.totalWaterSaved ?? 0}L`,                              label: 'Water Saved',    icon: '💧' },
-                { value: `${((stats.totalCO2Reduced ?? 0) / 1000).toFixed(1)}kg`,       label: 'CO₂ Reduced',   icon: '🌿' },
-                { value: `${stats.totalPlasticAvoided ?? 0}g`,                          label: 'Plastic Saved', icon: '♻️' },
+                { value: `${stats.totalWaterSaved ?? 0}L`,                              label: 'Water Saved',    icon: 'water_drop' },
+                { value: `${((stats.totalCO2Reduced ?? 0) / 1000).toFixed(1)}kg`,       label: 'CO₂ Reduced',   icon: 'eco' },
+                { value: `${stats.totalPlasticAvoided ?? 0}g`,                          label: 'Plastic Saved', icon: 'recycling' },
               ].map(({ value, label, icon }) => (
                 <div key={label} style={{ textAlign: 'center', flex: 1 }}>
-                  <div style={{ fontSize: '20px', marginBottom: '4px' }}>{icon}</div>
+                  <div style={{ fontSize: '20px', marginBottom: '4px' }}><span className="material-symbols-outlined">{icon}</span></div>
                   <p style={{
                     fontFamily: "'Cinzel', serif", fontSize: '16px', fontWeight: 600,
                     color: '#2D5016', lineHeight: 1,
@@ -647,7 +647,7 @@ export default function Certificate() {
           className="text-center text-sm"
           style={{ color: 'var(--color-text-muted)' }}
         >
-          🖨️ Use <strong>Print → Save as PDF</strong> to download your certificate.
+          <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>print</span> Use <strong>Print → Save as PDF</strong> to download your certificate.
         </motion.p>
       </div>
     </>

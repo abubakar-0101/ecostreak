@@ -31,7 +31,7 @@ function FieldError({ message }) {
           exit={{ opacity: 0, y: -4, height: 0 }}
           transition={{ duration: 0.2 }}
         >
-          <span>⚠</span> {message}
+          <span className="material-symbols-outlined" style={{ fontSize: '1em' }}>warning</span> {message}
         </motion.p>
       )}
     </AnimatePresence>
@@ -57,7 +57,7 @@ function AlertBanner({ message, type = 'error' }) {
             color: isError ? '#C1121F' : '#2D6A4F',
           }}
         >
-          <span className="text-base flex-shrink-0">{isError ? '🔴' : '✅'}</span>
+          <span className="text-base flex-shrink-0 material-symbols-outlined">{isError ? 'error' : 'check_circle'}</span>
           <span>{message}</span>
         </motion.div>
       )}
@@ -104,7 +104,7 @@ export default function ForgotPassword() {
     setStep1Loading(true)
     try {
       const { data } = await authAPI.forgotPassword(email)
-      toast.success('Reset code sent! Check your inbox 📧')
+      toast.success((t) => (<span>Reset code sent! Check your inbox <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>mail</span></span>))
       setStep(2)
       setStep1Errors({ success: data.message })
     } catch (err) {
@@ -159,7 +159,7 @@ export default function ForgotPassword() {
     setStep2Loading(true)
     try {
       const { data } = await authAPI.resetPassword(email, otpString, password)
-      toast.success('Password reset successfully! 🌿')
+      toast.success((t) => (<span>Password reset successfully! <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span></span>))
       navigate('/login')
     } catch (err) {
       const msg = err.response?.data?.message || 'Failed to reset password.'
@@ -203,7 +203,7 @@ export default function ForgotPassword() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 font-bold text-xl gradient-text">
-            🌿 EcoStreak
+            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> EcoStreak
           </Link>
           <motion.h1
             className="text-2xl font-bold mt-4"
@@ -335,7 +335,7 @@ export default function ForgotPassword() {
                       onClick={() => setShowPassword(p => !p)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none flex items-center justify-center w-8 h-8 rounded-full"
                     >
-                      {showPassword ? '🙈' : '👁️'}
+                      <span className="material-symbols-outlined">{showPassword ? 'visibility_off' : 'visibility'}</span>
                     </button>
                   </div>
                   <FieldError message={step2Errors.password} />

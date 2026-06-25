@@ -36,7 +36,7 @@ export default function Sidebar() {
     try { await authAPI.logout() } catch (_) { /* ignore */ }
     clearAuth()
     navigate('/login')
-    toast.success('Logged out. See you on the trail! 🌿')
+    toast.success((t) => (<span>Logged out. See you on the trail! <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span></span>))
   }
 
   return (
@@ -65,7 +65,7 @@ export default function Sidebar() {
               style={{ animation: 'leafSway 3s ease-in-out infinite', display: 'block' }}
               aria-hidden="true"
             >
-              🍃
+              <span className="material-symbols-outlined">energy_savings_leaf</span>
             </span>
           </div>
           <div>
@@ -91,7 +91,7 @@ export default function Sidebar() {
               className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0"
               style={{ background: 'var(--leaf-shadow)', border: '1.5px solid var(--green-light)' }}
             >
-              {user.avatar || '🌱'}
+              <span className="material-symbols-outlined">{user.avatar || 'compost'}</span>
             </div>
             <div className="min-w-0">
               <p className="font-semibold text-sm truncate" style={{ color: 'var(--color-text)' }}>
@@ -99,7 +99,7 @@ export default function Sidebar() {
               </p>
               {/* Leaf streak instead of flame */}
               <p className="text-xs flex items-center gap-1 mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-                <span aria-hidden="true">🍃</span>
+                <span aria-hidden="true" className="material-symbols-outlined" style={{ fontSize: '1em' }}>energy_savings_leaf</span>
                 {user.currentStreak || 0} day streak
               </p>
             </div>
@@ -123,7 +123,7 @@ export default function Sidebar() {
               >
                 <Icon className="w-5 h-5 flex-shrink-0" style={{ opacity: 0.5 }} />
                 <span style={{ fontFamily: "'DM Sans', sans-serif" }}>{label}</span>
-                <span className="ml-auto text-xs" aria-label="Locked">🔒</span>
+                <span className="ml-auto text-xs material-symbols-outlined" aria-label="Locked">lock</span>
               </div>
             )
           }
@@ -164,7 +164,7 @@ export default function Sidebar() {
                       transition={{ duration: 0.25 }}
                       aria-hidden="true"
                     >
-                      🌿
+                      <span className="material-symbols-outlined">eco</span>
                     </motion.span>
                   )}
                 </>

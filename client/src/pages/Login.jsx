@@ -10,7 +10,7 @@ import { authAPI } from '../services/api'
 import { Button } from '../components/ui'
 
 /* ── Floating leaf particles (decorative) ───────────────────────────────── */
-const LEAVES = ['🌿', '🍃', '🌱', '🍀', '🌾']
+const LEAVES = ['eco', 'energy_savings_leaf', 'compost', 'local_florist', 'grass']
 
 function FloatingLeaf({ index }) {
   const leaf = LEAVES[index % LEAVES.length]
@@ -23,7 +23,7 @@ function FloatingLeaf({ index }) {
   }
   return (
     <span
-      className="absolute select-none pointer-events-none animate-float"
+      className="absolute select-none pointer-events-none animate-float material-symbols-outlined"
       style={style}
       aria-hidden="true"
     >
@@ -55,7 +55,7 @@ function FieldError({ message }) {
           exit={{ opacity: 0, y: -4, height: 0 }}
           transition={{ duration: 0.2 }}
         >
-          <span>⚠</span> {message}
+          <span className="material-symbols-outlined" style={{ fontSize: '1em' }}>warning</span> {message}
         </motion.p>
       )}
     </AnimatePresence>
@@ -81,7 +81,7 @@ function AlertBanner({ message, type = 'error' }) {
             color: isError ? '#C1121F' : '#2D6A4F',
           }}
         >
-          <span className="text-base flex-shrink-0">{isError ? '🔴' : '✅'}</span>
+          <span className="text-base flex-shrink-0 material-symbols-outlined">{isError ? 'error' : 'check_circle'}</span>
           <span>{message}</span>
         </motion.div>
       )}
@@ -121,7 +121,7 @@ export default function Login() {
     try {
       const { data } = await authAPI.login({ email: form.email, password: form.password, rememberMe: form.rememberMe })
       setAuth(data.user, data.accessToken)
-      toast.success(`Welcome back, ${data.user.username}! 🌿`)
+      toast.success((t) => (<span>Welcome back, {data.user.username}! <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span></span>))
       navigate('/dashboard')
     } catch (err) {
       const msg = err.response?.data?.message || 'Login failed. Please try again.'
@@ -177,14 +177,14 @@ export default function Login() {
             animate={{ y: [0, -12, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
           >
-            🌿
+            <span className="material-symbols-outlined">eco</span>
           </motion.div>
           <h2 className="text-4xl font-bold mb-4">Welcome Back</h2>
           <p className="text-lg text-green-200 max-w-sm">
             Your eco journey awaits. Continue building habits that heal the planet.
           </p>
           <div className="mt-10 grid grid-cols-3 gap-4 text-center">
-            {[['🔥', 'Streak'], ['🏅', 'Badges'], ['🌍', 'Impact']].map(([icon, label], i) => (
+            {[['local_fire_department', 'Streak'], ['military_tech', 'Badges'], ['public', 'Impact']].map(([icon, label], i) => (
               <motion.div
                 key={label}
                 className="bg-white/10 rounded-2xl p-4 backdrop-blur-sm"
@@ -193,7 +193,7 @@ export default function Login() {
                 transition={{ delay: 0.3 + i * 0.15, duration: 0.5 }}
                 whileHover={{ scale: 1.05, background: 'rgba(255,255,255,0.18)' }}
               >
-                <div className="text-2xl">{icon}</div>
+                <div className="text-2xl"><span className="material-symbols-outlined">{icon}</span></div>
                 <div className="text-xs mt-1 text-green-200">{label}</div>
               </motion.div>
             ))}
@@ -212,7 +212,7 @@ export default function Login() {
           {/* Logo */}
           <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center gap-2 font-bold text-xl gradient-text">
-              🌿 EcoStreak
+              <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> EcoStreak
             </Link>
             <motion.h1
               className="text-2xl font-bold mt-4"
@@ -272,7 +272,7 @@ export default function Login() {
                     }}
                   />
                   {errors.email && (
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500">⚠</span>
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500 material-symbols-outlined">warning</span>
                   )}
                 </div>
                 <FieldError message={errors.email} />
@@ -336,7 +336,7 @@ export default function Login() {
                     )}
                   </button>
                   {errors.password && (
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500 pointer-events-none">⚠</span>
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500 pointer-events-none material-symbols-outlined">warning</span>
                   )}
                 </div>
                 <FieldError message={errors.password} />
@@ -381,7 +381,7 @@ export default function Login() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            🌱 New here?{' '}
+            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>compost</span> New here?{' '}
             <Link to="/register" style={{ color: 'var(--color-primary)' }} className="font-semibold">
               Create a free account
             </Link>

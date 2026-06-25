@@ -9,14 +9,14 @@
  * @returns {string}
  */
 export const getMotivationalMessage = (streak) => {
-  if (streak === 0) return 'Ready to start your eco journey? 🌱'
-  if (streak <= 3)  return "You've started something amazing! 🌿"
-  if (streak <= 7)  return "You're building a habit — keep going! 🔥"
-  if (streak <= 14) return "You're in the zone. The planet thanks you! 🌍"
-  if (streak <= 29) return "One full month down. You're incredible! ⚡"
-  if (streak <= 49) return "Halfway to legend status — keep growing! 🌳"
-  if (streak <= 99) return "Almost an Eco Warrior. Don't stop now! 🏆"
-  return "You are a 100-Day Eco Warrior. You've changed the world! 🏆"
+  if (streak === 0) return 'Ready to start your eco journey?'
+  if (streak <= 3)  return "You've started something amazing!"
+  if (streak <= 7)  return "You're building a habit — keep going!"
+  if (streak <= 14) return "You're in the zone. The planet thanks you!"
+  if (streak <= 29) return "One full month down. You're incredible!"
+  if (streak <= 49) return "Halfway to legend status — keep growing!"
+  if (streak <= 99) return "Almost an Eco Warrior. Don't stop now!"
+  return "You are a 100-Day Eco Warrior. You've changed the world!"
 }
 
 // ─── TIME OF DAY GREETING ───────────────────────────────────
@@ -42,7 +42,7 @@ export const getImpactComparisons = ({ waterSaved, co2Reduced, plasticAvoided })
     unit: 'L',
     label: 'Water Saved',
     comparison: `${Math.floor(waterSaved / 65)} showers worth`,
-    icon: '💧',
+    icon: 'water_drop',
     color: '#3b82f6',
   },
   co2: {
@@ -50,7 +50,7 @@ export const getImpactComparisons = ({ waterSaved, co2Reduced, plasticAvoided })
     unit: 'kg CO₂',
     label: 'CO₂ Reduced',
     comparison: `${Math.floor(co2Reduced / 2400)} car trips avoided`,
-    icon: '🌿',
+    icon: 'eco',
     color: '#2D6A4F',
   },
   plastic: {
@@ -58,7 +58,7 @@ export const getImpactComparisons = ({ waterSaved, co2Reduced, plasticAvoided })
     unit: 'g',
     label: 'Plastic Avoided',
     comparison: `${Math.floor(plasticAvoided / 15)} plastic bottles`,
-    icon: '♻️',
+    icon: 'recycling',
     color: '#f59e0b',
   },
 })
@@ -106,15 +106,15 @@ export const isSameDay = (a, b) => {
 
 // ─── BADGE CONFIG ───────────────────────────────────────────
 export const BADGE_CONFIG = [
-  { id: 'first_leaf',    name: 'First Leaf',     icon: '🌱', rarity: 'common',    description: 'Complete your very first eco task' },
-  { id: 'green_week',    name: 'Green Week',      icon: '🌿', rarity: 'uncommon',  description: 'Maintain a 7-day streak' },
-  { id: 'month_master',  name: 'Month Master',    icon: '🗓️', rarity: 'rare',      description: 'Maintain a 30-day streak' },
-  { id: 'halfway_hero',  name: 'Halfway Hero',    icon: '⚡', rarity: 'epic',      description: 'Reach a 50-day streak' },
-  { id: 'eco_warrior',   name: 'Eco Warrior',     icon: '🏆', rarity: 'legendary', description: 'Complete all 100 days' },
-  { id: 'water_guardian',name: 'Water Guardian',  icon: '💧', rarity: 'rare',      description: 'Save 100 liters of water' },
-  { id: 'carbon_crusher',name: 'Carbon Crusher',  icon: '🌍', rarity: 'rare',      description: 'Reduce 500g of CO₂' },
-  { id: 'waste_buster',  name: 'Waste Buster',    icon: '♻️', rarity: 'uncommon',  description: 'Avoid 200g of plastic' },
-  { id: 'early_bird',    name: 'Early Bird',      icon: '🌅', rarity: 'uncommon',  description: 'Complete a task before 8am' },
+  { id: 'first_leaf',    name: 'First Leaf',     icon: 'compost',       rarity: 'common',    description: 'Complete your very first eco task' },
+  { id: 'green_week',    name: 'Green Week',      icon: 'eco',           rarity: 'uncommon',  description: 'Maintain a 7-day streak' },
+  { id: 'month_master',  name: 'Month Master',    icon: 'calendar_month',rarity: 'rare',      description: 'Maintain a 30-day streak' },
+  { id: 'halfway_hero',  name: 'Halfway Hero',    icon: 'bolt',          rarity: 'epic',      description: 'Reach a 50-day streak' },
+  { id: 'eco_warrior',   name: 'Eco Warrior',     icon: 'emoji_events',  rarity: 'legendary', description: 'Complete all 100 days' },
+  { id: 'water_guardian',name: 'Water Guardian',  icon: 'water_drop',    rarity: 'rare',      description: 'Save 100 liters of water' },
+  { id: 'carbon_crusher',name: 'Carbon Crusher',  icon: 'public',        rarity: 'rare',      description: 'Reduce 500g of CO₂' },
+  { id: 'waste_buster',  name: 'Waste Buster',    icon: 'recycling',     rarity: 'uncommon',  description: 'Avoid 200g of plastic' },
+  { id: 'early_bird',    name: 'Early Bird',      icon: 'wb_twilight',   rarity: 'uncommon',  description: 'Complete a task before 8am' },
 ]
 
 export const RARITY_COLORS = {
@@ -126,10 +126,10 @@ export const RARITY_COLORS = {
 
 // ─── CATEGORY CONFIG ────────────────────────────────────────
 export const CATEGORY_CONFIG = {
-  water:  { label: 'Water',  icon: '💧', color: '#3b82f6', bg: '#dbeafe' },
-  energy: { label: 'Energy', icon: '⚡', color: '#f59e0b', bg: '#fef3c7' },
-  waste:  { label: 'Waste',  icon: '♻️', color: '#f97316', bg: '#ffedd5' },
-  nature: { label: 'Nature', icon: '🌿', color: '#22c55e', bg: '#dcfce7' },
+  water:  { label: 'Water',  icon: 'water_drop', color: '#3b82f6', bg: '#dbeafe' },
+  energy: { label: 'Energy', icon: 'bolt',       color: '#f59e0b', bg: '#fef3c7' },
+  waste:  { label: 'Waste',  icon: 'recycling',  color: '#f97316', bg: '#ffedd5' },
+  nature: { label: 'Nature', icon: 'eco',        color: '#22c55e', bg: '#dcfce7' },
 }
 
 // ─── MILESTONE DAYS ─────────────────────────────────────────
@@ -137,14 +137,14 @@ export const MILESTONES = [25, 50, 75, 100]
 
 // ─── AVATAR PRESETS ─────────────────────────────────────────
 export const PRESET_AVATARS = [
-  { id: 1, emoji: '🌱', label: 'Seedling' },
-  { id: 2, emoji: '🌿', label: 'Herb' },
-  { id: 3, emoji: '🌳', label: 'Tree' },
-  { id: 4, emoji: '🐢', label: 'Turtle' },
-  { id: 5, emoji: '🦋', label: 'Butterfly' },
-  { id: 6, emoji: '🐝', label: 'Bee' },
-  { id: 7, emoji: '🌊', label: 'Wave' },
-  { id: 8, emoji: '☀️', label: 'Sun' },
+  { id: 1, emoji: 'compost',        label: 'Seedling' },
+  { id: 2, emoji: 'eco',            label: 'Herb' },
+  { id: 3, emoji: 'park',           label: 'Tree' },
+  { id: 4, emoji: 'pets',           label: 'Turtle' },
+  { id: 5, emoji: 'local_florist',  label: 'Butterfly' },
+  { id: 6, emoji: 'hive',           label: 'Bee' },
+  { id: 7, emoji: 'waves',          label: 'Wave' },
+  { id: 8, emoji: 'wb_sunny',       label: 'Sun' },
 ]
 
 // ─── NUMBER FORMATTERS ──────────────────────────────────────

@@ -25,7 +25,7 @@ function LeafParticles({ count = 18 }) {
     top:  `${-10 - Math.random() * 10}%`,
     delay: Math.random() * 1.2,
     size:  0.8 + Math.random() * 0.8,
-    emoji: ['🍃', '🌿', '🍀'][Math.floor(Math.random() * 3)],
+    emoji: ['energy_savings_leaf', 'eco', 'local_florist'][Math.floor(Math.random() * 3)],
   }))
 
   return (
@@ -33,7 +33,7 @@ function LeafParticles({ count = 18 }) {
       {leaves.map(l => (
         <span
           key={l.id}
-          className="leaf-particle"
+          className="leaf-particle material-symbols-outlined"
           style={{
             left:             l.left,
             top:              l.top,
@@ -160,7 +160,7 @@ export default function Report() {
           className="text-3xl font-bold"
           style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
         >
-          🌿 100-Day Impact Report
+          <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> 100-Day Impact Report
         </h1>
         <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>
           Your complete environmental contribution summary
@@ -170,9 +170,9 @@ export default function Report() {
       {/* Summary impact cards – animated earth stats */}
       <div className="grid md:grid-cols-3 gap-5">
         {[
-          { icon: '💧', label: 'Water Saved',    value: `${report?.totalWaterSaved ?? 0}L`,                          color: '#3B7EA8' },
-          { icon: '🌿', label: 'CO₂ Reduced',    value: `${((report?.totalCO2Reduced ?? 0) / 1000).toFixed(2)}kg`,  color: 'var(--green-mid)' },
-          { icon: '♻️', label: 'Plastic Avoided', value: `${report?.totalPlasticAvoided ?? 0}g`,                     color: 'var(--bark)' },
+          { icon: 'water_drop', label: 'Water Saved',    value: `${report?.totalWaterSaved ?? 0}L`,                          color: '#3B7EA8' },
+          { icon: 'eco',        label: 'CO₂ Reduced',    value: `${((report?.totalCO2Reduced ?? 0) / 1000).toFixed(2)}kg`,  color: 'var(--green-mid)' },
+          { icon: 'recycling',  label: 'Plastic Avoided', value: `${report?.totalPlasticAvoided ?? 0}g`,                     color: 'var(--bark)' },
         ].map(({ icon, label, value, color }, i) => (
           <motion.div
             key={label}
@@ -181,7 +181,7 @@ export default function Report() {
             transition={{ delay: i * 0.10, duration: 0.55, ease: 'easeOut' }}
           >
             <Card className="text-center py-7">
-              <div className="text-4xl mb-3" aria-hidden="true">{icon}</div>
+              <div className="text-4xl mb-3" aria-hidden="true"><span className="material-symbols-outlined">{icon}</span></div>
               <p
                 className="text-3xl font-black"
                 style={{ color, fontFamily: "'Lora', serif" }}
@@ -203,13 +203,13 @@ export default function Report() {
         >
           <Card>
             <h3 className="font-bold mb-4" style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}>
-              📊 Daily Impact
+              <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>bar_chart</span> Daily Impact
             </h3>
             <Bar data={barData} options={opts} />
           </Card>
           <Card>
             <h3 className="font-bold mb-4" style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}>
-              🌿 By Category
+              <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> By Category
             </h3>
             <Pie data={pieData} options={(() => { const { scales, ...rest } = opts; return rest; })()} />
           </Card>
@@ -223,7 +223,7 @@ export default function Report() {
         >
           <Card>
             <h3 className="font-bold mb-4" style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}>
-              📈 Streak Trend
+              <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>trending_up</span> Streak Trend
             </h3>
             <Line data={lineData} options={opts} />
           </Card>
@@ -249,7 +249,7 @@ export default function Report() {
                     className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
                     style={{ background: 'var(--leaf-shadow)', border: '1.5px solid var(--green-light)' }}
                   >
-                    {isUnlocked ? '🏅' : '🔒'}
+                    <span className="material-symbols-outlined">{isUnlocked ? 'military_tech' : 'lock'}</span>
                   </div>
                   <div>
                     <h3
@@ -290,7 +290,7 @@ export default function Report() {
                     }}
                     title={`Complete ${100 - done} more day${100 - done !== 1 ? 's' : ''} to unlock`}
                   >
-                    🔒 Locked
+                    <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>lock</span> Locked
                   </span>
                 )}
               </div>

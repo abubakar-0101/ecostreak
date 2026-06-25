@@ -39,7 +39,7 @@ export default function Profile() {
 
   useEffect(() => {
     if (user) {
-      setForm({ username: user.username || '', bio: user.bio || '', location: user.location || '', avatar: user.avatar || '🌱' })
+      setForm({ username: user.username || '', bio: user.bio || '', location: user.location || '', avatar: user.avatar || 'compost' })
     }
     userAPI.getStats().then(({ data }) => setStats(data)).catch(() => {})
   }, [user])
@@ -51,7 +51,7 @@ export default function Profile() {
       const { data } = await userAPI.updateProfile(form)
       updateUser(data.user)
       setEditing(false)
-      toast.success('Profile updated! 🌿')
+      toast.success((t) => (<span>Profile updated! <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span></span>))
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to update profile')
     } finally {
@@ -90,7 +90,7 @@ export default function Profile() {
                 title="Click to change avatar"
                 aria-label="Change avatar"
               >
-                {form.avatar}
+                <span className="material-symbols-outlined">{form.avatar}</span>
               </motion.div>
               <button
                 onClick={() => setAvatarModal(true)}
@@ -162,7 +162,7 @@ export default function Profile() {
                       <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>{user?.email}</p>
                       {user?.location && (
                         <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>
-                          📍 {user.location}
+                          <span className="material-symbols-outlined" style={{ verticalAlign: 'middle', fontSize: '1em' }}>place</span> {user.location}
                         </p>
                       )}
                       <p className="text-xs mt-1.5" style={{ color: 'var(--color-text-muted)', fontStyle: 'italic' }}>
@@ -170,7 +170,7 @@ export default function Profile() {
                       </p>
                     </div>
                     <Button variant="secondary" size="sm" onClick={() => setEditing(true)}>
-                      ✏️ Edit
+                      <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>edit</span> Edit
                     </Button>
                   </div>
                   {user?.bio && (
@@ -200,13 +200,13 @@ export default function Profile() {
           className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           {[
-            { icon: '🍃', label: 'Current Streak', value: `${stats.currentStreak}d`, color: 'var(--green-mid)' },
-            { icon: '🌿', label: 'Longest Streak',  value: `${stats.longestStreak}d`,  color: 'var(--green-deep)' },
-            { icon: '🌍', label: 'Eco Score',       value: stats.ecoScore,             color: 'var(--bark)' },
-            { icon: '🏅', label: 'Badges',          value: stats.badgeCount,           color: 'var(--color-gold)' },
+            { icon: 'energy_savings_leaf', label: 'Current Streak', value: `${stats.currentStreak}d`, color: 'var(--green-mid)' },
+            { icon: 'eco',                 label: 'Longest Streak',  value: `${stats.longestStreak}d`,  color: 'var(--green-deep)' },
+            { icon: 'public',              label: 'Eco Score',       value: stats.ecoScore,             color: 'var(--bark)' },
+            { icon: 'military_tech',       label: 'Badges',          value: stats.badgeCount,           color: 'var(--color-gold)' },
           ].map(({ icon, label, value, color }) => (
             <Card key={label} className="text-center py-5 px-3">
-              <div className="text-2xl mb-1.5" aria-hidden="true">{icon}</div>
+              <div className="text-2xl mb-1.5" aria-hidden="true"><span className="material-symbols-outlined">{icon}</span></div>
               <p
                 className="text-xl font-bold"
                 style={{ color, fontFamily: "'Lora', serif" }}
@@ -237,7 +237,7 @@ export default function Profile() {
               title={label}
               aria-label={label}
             >
-              {emoji}
+              <span className="material-symbols-outlined">{emoji}</span>
             </button>
           ))}
         </div>

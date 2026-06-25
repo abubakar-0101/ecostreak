@@ -67,7 +67,7 @@ export default function Badges() {
             className="text-lg font-bold mb-4"
             style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
           >
-            🏅 Earned Badges
+            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>military_tech</span> Earned Badges
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {unlocked.map((badge, i) => (
@@ -91,7 +91,7 @@ export default function Badges() {
             className="text-lg font-bold mb-4"
             style={{ fontFamily: "'Lora', serif", color: 'var(--color-text-muted)' }}
           >
-            🔒 Locked Badges
+            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>lock</span> Locked Badges
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {locked.map((badge, i) => (
@@ -116,7 +116,7 @@ export default function Badges() {
               style={selected.earnedAt ? { filter: 'drop-shadow(0 3px 8px rgba(107,76,42,0.25))' } : {}}
               aria-hidden="true"
             >
-              {selected.icon}
+              <span className="material-symbols-outlined">{selected.icon}</span>
             </div>
             <h3
               className="text-xl font-bold mb-2"
@@ -141,11 +141,11 @@ export default function Badges() {
                 className="text-xs font-medium"
                 style={{ fontFamily: "'Lora', serif", fontStyle: 'italic', color: 'var(--green-mid)' }}
               >
-                🌿 Earned on {new Date(selected.earnedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                <span className="material-symbols-outlined" style={{ verticalAlign: 'middle', fontSize: '1em' }}>eco</span> Earned on {new Date(selected.earnedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
               </p>
             ) : (
               <p className="text-xs" style={{ color: 'var(--color-text-muted)', fontStyle: 'italic' }}>
-                Keep going to unlock this badge 🌱
+                Keep going to unlock this badge <span className="material-symbols-outlined" style={{ verticalAlign: 'middle', fontSize: '1em' }}>compost</span>
               </p>
             )}
           </div>
@@ -179,7 +179,7 @@ function BadgeCard({ badge, unlocked, earnedAt, delay, onClick }) {
       <div
         className={`text-4xl mb-3 relative transition-all ${!unlocked ? 'grayscale opacity-40' : ''}`}
       >
-        {badge.icon}
+        <span className="material-symbols-outlined">{badge.icon}</span>
       </div>
       <p
         className="text-sm font-bold leading-tight mb-1.5 relative"
@@ -201,7 +201,7 @@ function BadgeCard({ badge, unlocked, earnedAt, delay, onClick }) {
           style={{ color: 'var(--color-text-muted)', opacity: 0.5 }}
           aria-hidden="true"
         >
-          🔒
+          <span className="material-symbols-outlined">lock</span>
         </div>
       )}
     </motion.button>

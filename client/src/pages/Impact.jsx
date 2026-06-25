@@ -106,7 +106,7 @@ export default function Impact() {
           className="text-3xl font-bold"
           style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
         >
-          🌍 Eco Impact
+          <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>public</span> Eco Impact
         </h1>
         <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>
           Your real-world environmental contribution
@@ -124,7 +124,7 @@ export default function Impact() {
               transition={{ delay: i * 0.10, duration: 0.55, ease: 'easeOut' }}
               className="eco-card p-6 text-center"
             >
-              <div className="text-4xl mb-3" aria-hidden="true">{metric.icon}</div>
+              <div className="text-4xl mb-3" aria-hidden="true"><span className="material-symbols-outlined">{metric.icon}</span></div>
               <p
                 className="text-3xl font-bold"
                 style={{ color: metric.color, fontFamily: "'Lora', serif" }}
@@ -160,7 +160,7 @@ export default function Impact() {
               className="text-lg font-bold mb-5"
               style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
             >
-              📊 Daily Impact Breakdown
+              <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>bar_chart</span> Daily Impact Breakdown
             </h2>
             <Bar data={chartData} options={chartOptions} />
           </Card>

@@ -66,7 +66,7 @@ export default function VerifyOTP() {
     try {
       const { data } = await authAPI.verifyOTP(email, otpString)
       setAuth(data.user, data.accessToken)
-      toast.success('Email verified! Welcome to EcoStreak 🌿')
+      toast.success((t) => (<span>Email verified! Welcome to EcoStreak <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span></span>))
       navigate('/dashboard')
     } catch (err) {
       const msg = err.response?.data?.message || 'Verification failed. Please try again.'
@@ -83,7 +83,7 @@ export default function VerifyOTP() {
     setResending(true)
     try {
       await authAPI.resendOTP(email)
-      toast.success('New code sent! Check your inbox 📧')
+      toast.success((t) => (<span>New code sent! Check your inbox <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>mail</span></span>))
       setResendCountdown(60)
       setOtp(['', '', '', '', '', ''])
       inputRefs.current[0]?.focus()
@@ -120,7 +120,7 @@ export default function VerifyOTP() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 font-bold text-xl gradient-text">
-            🌿 EcoStreak
+            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> EcoStreak
           </Link>
         </div>
 
@@ -132,7 +132,7 @@ export default function VerifyOTP() {
               animate={{ y: [0, -10, 0], rotate: [0, 3, -3, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             >
-              📧
+              <span className="material-symbols-outlined">mail</span>
             </motion.div>
             <h1 className="text-2xl font-bold" style={{ color: 'var(--color-text)' }}>
               Check your email
@@ -191,7 +191,7 @@ export default function VerifyOTP() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
               >
-                <span>🔴</span> {error}
+                <span className="material-symbols-outlined" style={{ fontSize: '1em' }}>error</span> {error}
               </motion.div>
             )}
           </AnimatePresence>
@@ -204,7 +204,7 @@ export default function VerifyOTP() {
             className="w-full"
             disabled={otpString.length < 6}
           >
-            ✅ Verify & Continue
+            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>check_circle</span> Verify & Continue
           </Button>
 
           {/* Resend section */}

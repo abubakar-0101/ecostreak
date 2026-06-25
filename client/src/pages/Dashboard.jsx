@@ -89,10 +89,10 @@ export default function Dashboard() {
       fireLeafConfetti()
       setShowLeaves(true)
       setTimeout(() => setShowLeaves(false), 2200)
-      toast.success(`Day ${todayTask.dayNumber} complete! +${data.pointsEarned} eco points 🌿`)
+      toast.success((t) => (<span>Day {todayTask.dayNumber} complete! +{data.pointsEarned} eco points <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span></span>))
       if (data.newBadges?.length) {
         setTimeout(() => {
-          data.newBadges.forEach((b) => toast.success(`🏅 Badge unlocked: ${b.name}!`, { duration: 6000 }))
+          data.newBadges.forEach((b) => toast.success((t) => (<span><span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>military_tech</span> Badge unlocked: {b.name}!</span>), { duration: 6000 }))
         }, 1500)
       }
       fetchData()
@@ -135,7 +135,7 @@ export default function Dashboard() {
             className="text-3xl font-bold leading-snug"
             style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
           >
-            {greeting}, {user?.username} 👋
+            {greeting}, {user?.username} <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>waving_hand</span>
           </h1>
           <p className="mt-1 text-sm" style={{ color: 'var(--color-text-muted)' }}>
             {message}
@@ -150,13 +150,13 @@ export default function Dashboard() {
               style={{ animation: streak.current > 0 ? 'leafSway 3s ease-in-out infinite' : 'none' }}
               aria-hidden="true"
             >
-              🍃
+              <span className="material-symbols-outlined">energy_savings_leaf</span>
             </span>
             <span>Day {dayNumber} of 100</span>
           </div>
           {streak.current === 0 && (
             <p className="text-xs mt-1.5 text-center" style={{ color: 'var(--bark)' }}>
-              Keep your streak alive! 🌱
+              Keep your streak alive! <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>compost</span>
             </p>
           )}
         </motion.div>
@@ -170,7 +170,7 @@ export default function Dashboard() {
         <Card>
           <div className="flex justify-between text-sm mb-3 font-medium" style={{ color: 'var(--color-text)' }}>
             <span style={{ fontFamily: "'Lora', serif" }}>
-              Your forest is growing 🌱 — {dayNumber} of 100 days
+              Your forest is growing <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>compost</span> — {dayNumber} of 100 days
             </span>
             <span style={{ color: 'var(--green-mid)', fontWeight: 600 }}>{pct}%</span>
           </div>
@@ -209,16 +209,16 @@ export default function Dashboard() {
         className="grid grid-cols-2 md:grid-cols-4 gap-4"
       >
         <motion.div variants={revealVariant}>
-          <StatCard icon="🍃" label="Current Streak" value={`${streak.current}d`} color="var(--green-mid)" />
+          <StatCard icon="energy_savings_leaf" label="Current Streak" value={`${streak.current}d`} color="var(--green-mid)" />
         </motion.div>
         <motion.div variants={revealVariant}>
-          <StatCard icon="🌿" label="Longest Streak" value={`${streak.longest}d`} color="var(--green-deep)" />
+          <StatCard icon="eco" label="Longest Streak" value={`${streak.longest}d`} color="var(--green-deep)" />
         </motion.div>
         <motion.div variants={revealVariant}>
-          <StatCard icon="🌍" label="Eco Score" value={stats?.ecoScore ?? 0} color="var(--bark)" />
+          <StatCard icon="public" label="Eco Score" value={stats?.ecoScore ?? 0} color="var(--bark)" />
         </motion.div>
         <motion.div variants={revealVariant}>
-          <StatCard icon="🏅" label="Badges" value={stats?.badgeCount ?? 0} color="var(--color-gold)" />
+          <StatCard icon="military_tech" label="Badges" value={stats?.badgeCount ?? 0} color="var(--color-gold)" />
         </motion.div>
       </motion.div>
 
@@ -259,7 +259,7 @@ export default function Dashboard() {
                   className="text-xs px-2.5 py-1 rounded-full"
                   style={{ background: 'var(--leaf-shadow)', color: 'var(--color-text-muted)' }}
                 >
-                  ⏱ {todayTask.estimatedMinutes} min
+                  <span className="material-symbols-outlined" style={{ verticalAlign: 'middle', fontSize: '1em' }}>timer</span> {todayTask.estimatedMinutes} min
                 </span>
               </div>
 
@@ -281,7 +281,7 @@ export default function Dashboard() {
                   className="flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-semibold"
                   style={{ background: 'var(--leaf-shadow)', color: 'var(--green-deep)', border: '1.5px solid var(--green-light)' }}
                 >
-                  🌿 Completed Today
+                  <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> Completed Today
                 </motion.div>
               )}
             </AnimatePresence>
@@ -294,16 +294,16 @@ export default function Dashboard() {
           {/* Impact preview row */}
           <div className="grid grid-cols-3 gap-3 mb-6">
             {[
-              { icon: '💧', label: `${todayTask.waterSaved}L water`,      color: '#3B7EA8' },
-              { icon: '🌿', label: `${todayTask.co2Reduced}g CO₂`,        color: 'var(--green-mid)' },
-              { icon: '♻️', label: `${todayTask.plasticAvoided}g plastic`, color: 'var(--bark)' },
+              { icon: 'water_drop', label: `${todayTask.waterSaved}L water`,      color: '#3B7EA8' },
+              { icon: 'eco',        label: `${todayTask.co2Reduced}g CO₂`,        color: 'var(--green-mid)' },
+              { icon: 'recycling',  label: `${todayTask.plasticAvoided}g plastic`, color: 'var(--bark)' },
             ].map(({ icon, label, color }) => (
               <div
                 key={label}
                 className="text-center p-3 rounded-xl"
                 style={{ background: 'var(--leaf-shadow)', border: '1px solid var(--color-border)' }}
               >
-                <div className="text-xl" aria-hidden="true">{icon}</div>
+                <div className="text-xl" aria-hidden="true"><span className="material-symbols-outlined">{icon}</span></div>
                 <div className="text-xs font-semibold mt-1" style={{ color }}>{label}</div>
               </div>
             ))}
@@ -319,7 +319,7 @@ export default function Dashboard() {
                 className="text-sm"
                 style={{ fontFamily: "'Lora', serif", fontStyle: 'italic', color: 'var(--bark)' }}
               >
-                💡 {todayTask.ecoFactTip}
+                <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>lightbulb</span> {todayTask.ecoFactTip}
               </p>
             </div>
           )}
@@ -332,7 +332,7 @@ export default function Dashboard() {
               loading={completing}
               className="flex-1 text-base py-4"
             >
-              {alreadyDone ? '🌿 Task Complete!' : '🌿 Mark as Complete'}
+              {alreadyDone ? <><span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> Task Complete!</> : <><span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> Mark as Complete</>}
             </Button>
             <Link to="/tasks" className="btn-secondary py-4 px-6 text-sm">
               View Details
@@ -342,7 +342,7 @@ export default function Dashboard() {
       ) : (
         <Card>
           <div className="text-center py-10">
-            <div className="text-5xl mb-4 animate-float" aria-hidden="true">🌳</div>
+            <div className="text-5xl mb-4 animate-float" aria-hidden="true"><span className="material-symbols-outlined">park</span></div>
             <h3
               className="text-xl font-bold mb-2"
               style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
@@ -350,7 +350,7 @@ export default function Dashboard() {
               Challenge Complete!
             </h3>
             <p className="mb-5" style={{ color: 'var(--color-text-muted)' }}>
-              You've finished all 100 days. Your forest is fully grown 🌿
+              You've finished all 100 days. Your forest is fully grown <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span>
             </p>
             <Link to="/report" className="btn-primary inline-flex">View My Impact Report →</Link>
           </div>
@@ -378,7 +378,7 @@ export default function Dashboard() {
               className="font-bold mb-4"
               style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
             >
-              🌍 Your Cumulative Impact
+              <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>public</span> Your Cumulative Impact
             </h3>
             <div className="grid grid-cols-3 gap-4 text-center">
               {[

@@ -121,15 +121,15 @@ const TASKS = [
 ]
 
 const BADGES = [
-  { badgeId:'first_leaf',     name:'First Leaf',     icon:'🌱', rarity:'common',    description:'Complete your very first eco task', condition:'Complete Day 1' },
-  { badgeId:'green_week',     name:'Green Week',      icon:'🌿', rarity:'uncommon',  description:'Maintain a 7-day streak',          condition:'7-day streak' },
-  { badgeId:'month_master',   name:'Month Master',    icon:'🗓️', rarity:'rare',      description:'Maintain a 30-day streak',         condition:'30-day streak' },
-  { badgeId:'halfway_hero',   name:'Halfway Hero',    icon:'⚡', rarity:'epic',      description:'Reach a 50-day streak',            condition:'50-day streak' },
-  { badgeId:'eco_warrior',    name:'Eco Warrior',     icon:'🏆', rarity:'legendary', description:'Complete all 100 days',            condition:'Complete 100 days' },
-  { badgeId:'water_guardian', name:'Water Guardian',  icon:'💧', rarity:'rare',      description:'Save 100 liters of water',         condition:'100L water saved' },
-  { badgeId:'carbon_crusher', name:'Carbon Crusher',  icon:'🌍', rarity:'rare',      description:'Reduce 500g of CO₂',              condition:'500g CO₂ reduced' },
-  { badgeId:'waste_buster',   name:'Waste Buster',    icon:'♻️', rarity:'uncommon',  description:'Avoid 200g of plastic',           condition:'200g plastic avoided' },
-  { badgeId:'early_bird',     name:'Early Bird',      icon:'🌅', rarity:'uncommon',  description:'Complete a task before 8am',      condition:'Before 8am' },
+  { badgeId:'first_leaf',     name:'First Leaf',     icon:'compost',        rarity:'common',    description:'Complete your very first eco task', condition:'Complete Day 1' },
+  { badgeId:'green_week',     name:'Green Week',      icon:'eco',            rarity:'uncommon',  description:'Maintain a 7-day streak',          condition:'7-day streak' },
+  { badgeId:'month_master',   name:'Month Master',    icon:'calendar_month', rarity:'rare',      description:'Maintain a 30-day streak',         condition:'30-day streak' },
+  { badgeId:'halfway_hero',   name:'Halfway Hero',    icon:'bolt',           rarity:'epic',      description:'Reach a 50-day streak',            condition:'50-day streak' },
+  { badgeId:'eco_warrior',    name:'Eco Warrior',     icon:'emoji_events',   rarity:'legendary', description:'Complete all 100 days',            condition:'Complete 100 days' },
+  { badgeId:'water_guardian', name:'Water Guardian',  icon:'water_drop',     rarity:'rare',      description:'Save 100 liters of water',         condition:'100L water saved' },
+  { badgeId:'carbon_crusher', name:'Carbon Crusher',  icon:'public',         rarity:'rare',      description:'Reduce 500g of CO₂',              condition:'500g CO₂ reduced' },
+  { badgeId:'waste_buster',   name:'Waste Buster',    icon:'recycling',      rarity:'uncommon',  description:'Avoid 200g of plastic',           condition:'200g plastic avoided' },
+  { badgeId:'early_bird',     name:'Early Bird',      icon:'wb_twilight',    rarity:'uncommon',  description:'Complete a task before 8am',      condition:'Before 8am' },
 ]
 
 const seed = async () => {

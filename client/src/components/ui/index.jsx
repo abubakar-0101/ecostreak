@@ -107,7 +107,7 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }) {
                   onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                   aria-label="Close modal"
                 >
-                  ✕
+                  <span className="material-symbols-outlined">close</span>
                 </button>
               </div>
             )}
@@ -151,7 +151,7 @@ export default function PageLoader() {
       role="status"
       aria-label="Loading EcoStreak"
     >
-      <div className="text-4xl animate-float" aria-hidden="true">🌿</div>
+      <div className="text-4xl animate-float" aria-hidden="true"><span className="material-symbols-outlined">eco</span></div>
       <div className="flex gap-1.5">
         {[0, 1, 2].map((i) => (
           <div
@@ -204,10 +204,10 @@ export function ProgressBar({ value, max = 100, label, color }) {
 }
 
 /* ─── EMPTY STATE ────────────────────────────────────────── */
-export function EmptyState({ icon = '🌱', title, description, action }) {
+export function EmptyState({ icon = 'compost', title, description, action }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
-      <div className="text-5xl mb-4 animate-float" aria-hidden="true">{icon}</div>
+      <div className="text-5xl mb-4 animate-float" aria-hidden="true"><span className="material-symbols-outlined">{icon}</span></div>
       <h3
         className="text-xl font-bold mb-2"
         style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
@@ -241,7 +241,7 @@ export function StatCard({ icon, label, value, sub, color = 'var(--green-mid)' }
         style={{ background: 'var(--leaf-shadow)', border: '1px solid var(--color-border)' }}
         aria-hidden="true"
       >
-        {icon}
+        <span className="material-symbols-outlined">{icon}</span>
       </div>
       <div>
         <p

@@ -45,7 +45,7 @@ export default function EcoTipCard({ tips = DEFAULT_TIPS, intervalMs = 8000 }) {
           className="text-xs font-semibold uppercase tracking-widest"
           style={{ color: 'var(--green-mid)', fontFamily: "'DM Sans', sans-serif" }}
         >
-          🌿 Field Note
+          <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> Field Note
         </span>
         {/* Dot indicators */}
         <div className="flex gap-1.5" aria-hidden="true">

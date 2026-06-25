@@ -8,12 +8,12 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 const FEATURES = [
-  { icon: '📅', title: '100 Daily Tasks',   desc: 'One simple eco-action per day, carefully curated for real, measurable impact.' },
-  { icon: '🍃', title: 'Leaf Streak',       desc: 'Build momentum with daily streaks. Miss a day? Nature always gives you another chance.' },
-  { icon: '🏅', title: 'Earn Badges',       desc: 'Unlock achievements as you hit milestones on your green journey.' },
-  { icon: '🌍', title: 'Real Impact',       desc: 'Track water saved, CO₂ reduced, and plastic avoided in honest numbers.' },
-  { icon: '🏆', title: 'Leaderboard',       desc: 'Compete with eco warriors worldwide — top the global rankings.' },
-  { icon: '📊', title: 'Impact Report',     desc: 'A beautiful 100-day summary of your environmental contribution.' },
+  { icon: 'calendar_today',      title: '100 Daily Tasks',   desc: 'One simple eco-action per day, carefully curated for real, measurable impact.' },
+  { icon: 'energy_savings_leaf', title: 'Leaf Streak',       desc: 'Build momentum with daily streaks. Miss a day? Nature always gives you another chance.' },
+  { icon: 'military_tech',       title: 'Earn Badges',       desc: 'Unlock achievements as you hit milestones on your green journey.' },
+  { icon: 'public',              title: 'Real Impact',       desc: 'Track water saved, CO₂ reduced, and plastic avoided in honest numbers.' },
+  { icon: 'emoji_events',        title: 'Leaderboard',       desc: 'Compete with eco warriors worldwide — top the global rankings.' },
+  { icon: 'bar_chart',           title: 'Impact Report',     desc: 'A beautiful 100-day summary of your environmental contribution.' },
 ]
 
 const STATS = [
@@ -24,9 +24,9 @@ const STATS = [
 ]
 
 const HOW = [
-  { step: '01', icon: '📝', title: 'Sign Up Free',       desc: 'Create your account and start Day 1 of your 100-day eco challenge immediately.' },
-  { step: '02', icon: '✅', title: 'Complete Daily Task', desc: 'Each day unlocks a new eco task. Complete it to build your streak.' },
-  { step: '03', icon: '🌍', title: 'Track Real Impact',  desc: 'See how much water, CO₂, and plastic your habits save.' },
+  { step: '01', icon: 'edit_note',    title: 'Sign Up Free',       desc: 'Create your account and start Day 1 of your 100-day eco challenge immediately.' },
+  { step: '02', icon: 'check_circle', title: 'Complete Daily Task', desc: 'Each day unlocks a new eco task. Complete it to build your streak.' },
+  { step: '03', icon: 'public',       title: 'Track Real Impact',  desc: 'See how much water, CO₂, and plastic your habits save.' },
 ]
 
 // Gentle scroll-reveal
@@ -57,7 +57,7 @@ export default function Landing() {
               style={{ display: 'inline-block', animation: 'leafSway 3s ease-in-out infinite' }}
               aria-hidden="true"
             >
-              🍃
+              <span className="material-symbols-outlined">energy_savings_leaf</span>
             </span>
             <span
               className="font-bold text-base sm:text-lg truncate"
@@ -112,7 +112,7 @@ export default function Landing() {
                 fontFamily:   "'DM Sans', sans-serif",
               }}
             >
-              🌱 100-Day Sustainability Challenge
+              <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>compost</span> 100-Day Sustainability Challenge
             </span>
           </motion.div>
 
@@ -149,7 +149,7 @@ export default function Landing() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Link to="/register" className="btn-primary text-base py-4 px-8">
-              🌿 Start Your Challenge — It's Free
+              <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> Start Your Challenge — It's Free
             </Link>
             <Link to="/login" className="btn-secondary text-base py-4 px-8">
               Sign In
@@ -164,13 +164,13 @@ export default function Landing() {
             className="mt-16 flex justify-center gap-4 flex-wrap"
             aria-hidden="true"
           >
-            {['🌱', '💧', '♻️', '🌍', '🍃'].map((item, i) => (
+            {['compost', 'water_drop', 'recycling', 'public', 'energy_savings_leaf'].map((item, i) => (
               <div
                 key={i}
                 className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl eco-card"
                 style={{ animationDelay: `${i * 0.12}s` }}
               >
-                {item}
+                <span className="material-symbols-outlined">{item}</span>
               </div>
             ))}
           </motion.div>
@@ -228,7 +228,7 @@ export default function Landing() {
                 transition={{ delay: i * 0.09, duration: 0.55, ease: 'easeOut' }}
                 viewport={{ once: true }}
               >
-                <div className="text-3xl mb-4" aria-hidden="true">{icon}</div>
+                <div className="text-3xl mb-4" aria-hidden="true"><span className="material-symbols-outlined">{icon}</span></div>
                 <h3
                   className="font-bold text-lg mb-2"
                   style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
@@ -268,7 +268,7 @@ export default function Landing() {
                   style={{ background: 'var(--leaf-shadow)', border: '1.5px solid var(--green-light)' }}
                   aria-hidden="true"
                 >
-                  {icon}
+                  <span className="material-symbols-outlined">{icon}</span>
                 </div>
                 <span
                   className="text-xs font-bold uppercase tracking-widest mb-2"
@@ -299,7 +299,7 @@ export default function Landing() {
           aria-hidden="true"
         />
         <div className="max-w-2xl mx-auto relative">
-          <div className="text-5xl mb-5 animate-float" aria-hidden="true">🌿</div>
+          <div className="text-5xl mb-5 animate-float" aria-hidden="true"><span className="material-symbols-outlined">eco</span></div>
           <h2
             className="text-4xl font-bold mb-5"
             style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
@@ -311,7 +311,7 @@ export default function Landing() {
             Your journey starts with one small act — today.
           </p>
           <Link to="/register" className="btn-primary text-lg py-5 px-10">
-            🌿 Start Your 100-Day Challenge
+            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> Start Your 100-Day Challenge
           </Link>
         </div>
       </section>
@@ -324,7 +324,7 @@ export default function Landing() {
         <div className="max-w-4xl mx-auto flex flex-col items-center gap-5">
           {/* Brand */}
           <p className="font-medium" style={{ color: 'var(--green-deep)', fontFamily: "'Lora', serif", fontSize: '1rem' }}>
-            🍃 EcoStreak – Built for the planet
+            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>energy_savings_leaf</span> EcoStreak – Built for the planet
           </p>
 
           {/* Social & Contact links */}

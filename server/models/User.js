@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
     username:         { type: String, required: true, unique: true, trim: true, minlength: 3, maxlength: 30 },
     email:            { type: String, required: true, unique: true, lowercase: true, trim: true },
     passwordHash:     { type: String, required: true },
-    avatar:           { type: String, default: '🌱' },
+    avatar:           { type: String, default: 'compost' },
     bio:              { type: String, default: '', maxlength: 300 },
     location:         { type: String, default: '' },
     joinDate:         { type: Date, default: Date.now },

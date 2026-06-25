@@ -65,7 +65,7 @@ function VineRing({ completed, total = 100 }) {
         className="text-sm font-medium text-center"
         style={{ fontFamily: "'Lora', serif", fontStyle: 'italic', color: 'var(--bark)' }}
       >
-        Your forest is growing 🌱
+        Your forest is growing <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>compost</span>
       </p>
       {/* Accessible progress value */}
       <div
@@ -144,13 +144,13 @@ export default function Progress() {
         {/* Streak + stats grid */}
         <div className="grid grid-cols-2 gap-4">
           {[
-            { icon: '🍃', label: 'Current Streak', value: `${streak.current} days`, color: 'var(--green-mid)' },
-            { icon: '🌿', label: 'Longest Streak',  value: `${streak.longest} days`, color: 'var(--green-deep)' },
-            { icon: '✅', label: 'Days Complete',   value: `${completed}/100`,         color: 'var(--bark)' },
-            { icon: '📅', label: 'Current Day',     value: `Day ${dayNumber}`,        color: '#3B7EA8' },
+            { icon: 'energy_savings_leaf', label: 'Current Streak', value: `${streak.current} days`, color: 'var(--green-mid)' },
+            { icon: 'eco',                 label: 'Longest Streak',  value: `${streak.longest} days`, color: 'var(--green-deep)' },
+            { icon: 'check_circle',        label: 'Days Complete',   value: `${completed}/100`,         color: 'var(--bark)' },
+            { icon: 'calendar_today',      label: 'Current Day',     value: `Day ${dayNumber}`,        color: '#3B7EA8' },
           ].map(({ icon, label, value, color }) => (
             <Card key={label} className="text-center py-5 px-3">
-              <div className="text-3xl mb-1" aria-hidden="true">{icon}</div>
+              <div className="text-3xl mb-1" aria-hidden="true"><span className="material-symbols-outlined">{icon}</span></div>
               <p className="text-lg font-bold" style={{ color, fontFamily: "'Lora', serif" }}>
                 {value}
               </p>
@@ -209,7 +209,7 @@ export default function Progress() {
             className="text-lg font-bold mb-5"
             style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
           >
-            🌿 100-Day Calendar
+            <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> 100-Day Calendar
           </h2>
 
           <div className="grid grid-cols-10 sm:grid-cols-20 gap-2">
@@ -243,9 +243,9 @@ export default function Progress() {
                   }
                   title={`Day ${dayNum}${dayData?.completedAt ? ' – Completed' : ''}`}
                 >
-                  <span className="text-xs leading-none">{dayNum}</span>
-                  <span className="text-sm mt-0.5 leading-none" aria-hidden="true">
-                    {status === 'complete' ? '🍃' : status === 'missed' ? '✕' : status === 'future' ? '🔒' : ''}
+                  <span className="text-[10px] sm:text-xs leading-none">{dayNum}</span>
+                  <span className="mt-0.5 leading-none material-symbols-outlined" style={{ fontSize: '14px' }} aria-hidden="true">
+                    {status === 'complete' ? 'energy_savings_leaf' : status === 'missed' ? 'close' : status === 'future' ? 'lock' : ''}
                   </span>
 
                   {/* Today dot */}
@@ -263,7 +263,7 @@ export default function Progress() {
                       className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 text-[9px]"
                       aria-hidden="true"
                     >
-                      ⭐
+                      <span className="material-symbols-outlined" style={{ fontSize: '10px' }}>star</span>
                     </div>
                   )}
                 </motion.div>
@@ -278,12 +278,13 @@ export default function Progress() {
             aria-label="Calendar legend"
           >
             {[
-              { color: 'var(--green-mid)', label: '🍃 Completed' },
-              { color: 'var(--color-red)', label: '✕ Missed' },
-              { color: 'var(--color-gold)', label: '⭐ Milestone' },
-            ].map(({ color, label }) => (
+              { color: 'var(--green-mid)', icon: 'energy_savings_leaf', label: 'Completed' },
+              { color: 'var(--color-red)', icon: 'close',                label: 'Missed' },
+              { color: 'var(--color-gold)', icon: 'star',                 label: 'Milestone' },
+            ].map(({ color, icon, label }) => (
               <div key={label} className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded" style={{ background: color }} aria-hidden="true" />
+                <span className="material-symbols-outlined" style={{ fontSize: '14px' }} aria-hidden="true">{icon}</span>
                 <span>{label}</span>
               </div>
             ))}

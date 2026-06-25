@@ -56,7 +56,7 @@ export default function Tasks() {
       setCompletedToday(true)
       updateUser({ currentStreak: data.currentStreak, ecoScore: data.ecoScore })
       fireLeafConfetti()
-      toast.success(`Day ${task.dayNumber} complete! 🌿 +${data.pointsEarned} pts`)
+      toast.success((t) => (<span>Day {task.dayNumber} complete! <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> +{data.pointsEarned} pts</span>))
     } catch (err) {
       toast.error(err.response?.data?.message || 'Error completing task')
     } finally {
@@ -106,7 +106,7 @@ export default function Tasks() {
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold leading-none"
                 style={{ background: cat?.bg, color: cat?.color }}
               >
-                <span aria-hidden="true" className="text-[14px] leading-none">{cat?.icon}</span>
+                <span aria-hidden="true" className="material-symbols-outlined leading-none" style={{ fontSize: '14px' }}>{cat?.icon}</span>
                 <span>{task.category}</span>
               </span>
               <span className={`pill-${task.difficulty.toLowerCase()} inline-flex items-center px-3 py-1.5 leading-none`}>
@@ -116,7 +116,7 @@ export default function Tasks() {
                 className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium leading-none"
                 style={{ background: 'var(--leaf-shadow)', color: 'var(--color-text-muted)' }}
               >
-                <span aria-hidden="true" className="text-[14px] leading-none">⏱️</span>
+                <span aria-hidden="true" className="material-symbols-outlined leading-none" style={{ fontSize: '14px' }}>timer</span>
                 <span>{task.estimatedMinutes} minutes</span>
               </span>
             </div>
@@ -136,20 +136,20 @@ export default function Tasks() {
               className="text-sm font-bold mb-3"
               style={{ fontFamily: "'Lora', serif", color: 'var(--color-text)' }}
             >
-              🌍 Your Impact Today
+              <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>public</span> Your Impact Today
             </h3>
             <div className="grid grid-cols-3 gap-3 mb-6">
               {[
-                { icon: '💧', label: `${task.waterSaved}L`,         sub: 'water',   color: '#3B7EA8' },
-                { icon: '🌿', label: `${task.co2Reduced}g`,         sub: 'CO₂',     color: 'var(--green-mid)' },
-                { icon: '♻️', label: `${task.plasticAvoided}g`,     sub: 'plastic', color: 'var(--bark)' },
+                { icon: 'water_drop', label: `${task.waterSaved}L`,         sub: 'water',   color: '#3B7EA8' },
+                { icon: 'eco',        label: `${task.co2Reduced}g`,         sub: 'CO₂',     color: 'var(--green-mid)' },
+                { icon: 'recycling',  label: `${task.plasticAvoided}g`,     sub: 'plastic', color: 'var(--bark)' },
               ].map(({ icon, label, sub, color }) => (
                 <div
                   key={sub}
                   className="p-4 rounded-xl text-center"
                   style={{ background: 'var(--leaf-shadow)', border: '1px solid var(--color-border)' }}
                 >
-                  <div className="text-2xl" aria-hidden="true">{icon}</div>
+                  <div className="text-2xl" aria-hidden="true"><span className="material-symbols-outlined">{icon}</span></div>
                   <p
                     className="text-lg font-bold mt-1"
                     style={{ color, fontFamily: "'Lora', serif" }}
@@ -178,7 +178,7 @@ export default function Tasks() {
                     color:      'var(--bark)',
                   }}
                 >
-                  💡 {task.ecoFactTip}
+                  <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>lightbulb</span> {task.ecoFactTip}
                 </p>
               </div>
             )}
@@ -189,7 +189,7 @@ export default function Tasks() {
               disabled={completedToday}
               className="w-full text-base py-4"
             >
-              {completedToday ? '🌿 Completed Today!' : '🌿 Mark as Complete'}
+              {completedToday ? <><span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> Completed Today!</> : <><span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span> Mark as Complete</>}
             </Button>
           </motion.div>
 
@@ -227,13 +227,13 @@ export default function Tasks() {
                       className="text-xs font-medium"
                       style={{ color: 'var(--green-mid)' }}
                     >
-                      🌿 {new Date(d.completedAt).toLocaleDateString()}
+                      <span className="material-symbols-outlined" style={{ verticalAlign: 'middle', fontSize: '1em' }}>eco</span> {new Date(d.completedAt).toLocaleDateString()}
                     </span>
                   </div>
                 ))}
                 {calendar.filter(d => d.status === 'complete').length === 0 && (
                   <p className="text-sm text-center py-4" style={{ color: 'var(--color-text-muted)', fontFamily: "'Lora', serif", fontStyle: 'italic' }}>
-                    No completed days yet. Start today! 🌱
+                    No completed days yet. Start today! <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>compost</span>
                   </p>
                 )}
               </div>
@@ -243,7 +243,7 @@ export default function Tasks() {
       ) : (
         <Card>
           <div className="text-center py-12">
-            <div className="text-5xl mb-4 animate-float" aria-hidden="true">🌳</div>
+            <div className="text-5xl mb-4 animate-float" aria-hidden="true"><span className="material-symbols-outlined">park</span></div>
             <h3
               className="text-xl font-bold mb-2"
               style={{ fontFamily: "'Lora', serif", color: 'var(--green-deep)' }}
@@ -251,7 +251,7 @@ export default function Tasks() {
               All Done!
             </h3>
             <p style={{ color: 'var(--color-text-muted)' }}>
-              You've completed the full 100-day challenge. Your forest is grown 🌿
+              You've completed the full 100-day challenge. Your forest is grown <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>eco</span>
             </p>
           </div>
         </Card>

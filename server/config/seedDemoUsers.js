@@ -20,8 +20,8 @@ const DEMO_USERS = [
   {
     username:    'GreenGoddess',
     email:       'greengoddess@ecostreak.app',
-    avatar:      '🌳',
-    bio:         'Passionate environmentalist. Trees are my best friends 🌿',
+    avatar:      'park',
+    bio:         'Passionate environmentalist. Trees are my best friends.',
     location:    'Portland, OR',
     daysCompleted: 25,   // completed days 1–25 (minor gap at day 12)
     missedDays:  [12],   // missed day 12, breaks streak
@@ -30,8 +30,8 @@ const DEMO_USERS = [
   {
     username:    'EcoNinja',
     email:       'econinja@ecostreak.app',
-    avatar:      '🐢',
-    bio:         'Silent eco warrior. One action at a time 🥷',
+    avatar:      'pets',
+    bio:         'Silent eco warrior. One action at a time.',
     location:    'Austin, TX',
     daysCompleted: 20,
     missedDays:  [],     // perfect streak
@@ -40,8 +40,8 @@ const DEMO_USERS = [
   {
     username:    'PlanetPete',
     email:       'planetpete@ecostreak.app',
-    avatar:      '🌍',
-    bio:         'Geography teacher who walks the eco talk 🌎',
+    avatar:      'public',
+    bio:         'Geography teacher who walks the eco talk.',
     location:    'Denver, CO',
     daysCompleted: 18,
     missedDays:  [5, 11],
@@ -50,8 +50,8 @@ const DEMO_USERS = [
   {
     username:    'SolarSarah',
     email:       'solarsarah@ecostreak.app',
-    avatar:      '☀️',
-    bio:         'Solar panel installer by day, eco warrior by night ⚡',
+    avatar:      'wb_sunny',
+    bio:         'Solar panel installer by day, eco warrior by night.',
     location:    'Phoenix, AZ',
     daysCompleted: 15,
     missedDays:  [7],
@@ -60,8 +60,8 @@ const DEMO_USERS = [
   {
     username:    'WaveRider',
     email:       'waverider@ecostreak.app',
-    avatar:      '🌊',
-    bio:         'Surfer who keeps oceans clean, one wave at a time 🏄',
+    avatar:      'waves',
+    bio:         'Surfer who keeps oceans clean, one wave at a time.',
     location:    'San Diego, CA',
     daysCompleted: 14,
     missedDays:  [3, 8, 13],
@@ -70,8 +70,8 @@ const DEMO_USERS = [
   {
     username:    'BeeKeeper99',
     email:       'beekeeper99@ecostreak.app',
-    avatar:      '🐝',
-    bio:         'Beekeeper, gardener, and proud zero-waster 🍯',
+    avatar:      'hive',
+    bio:         'Beekeeper, gardener, and proud zero-waster.',
     location:    'Asheville, NC',
     daysCompleted: 12,
     missedDays:  [4, 9],
@@ -80,8 +80,8 @@ const DEMO_USERS = [
   {
     username:    'UrbanForester',
     email:       'urbanforester@ecostreak.app',
-    avatar:      '🦋',
-    bio:         'Turning concrete jungles into green havens 🌱',
+    avatar:      'local_florist',
+    bio:         'Turning concrete jungles into green havens.',
     location:    'Chicago, IL',
     daysCompleted: 10,
     missedDays:  [6],
